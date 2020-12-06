@@ -1,17 +1,17 @@
-package com.djamware.springbootmongodbsecurity;
+package com.lottomatching;
 
-import com.djamware.springbootmongodbsecurity.domain.Role;
-import com.djamware.springbootmongodbsecurity.repository.RoleRepository;
+import com.lottomatching.domain.Role;
+import com.lottomatching.repository.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class SpringbootMongodbSecurityApplication {
+public class SpringBootMongodbSecurityApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringbootMongodbSecurityApplication.class, args);
+        SpringApplication.run(SpringBootMongodbSecurityApplication.class, args);
     }
     
     @Bean

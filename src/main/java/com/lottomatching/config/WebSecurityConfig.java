@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.djamware.springbootmongodbsecurity.config;
+package com.lottomatching.config;
 
-import com.djamware.springbootmongodbsecurity.service.CustomUserDetailsService;
+import com.lottomatching.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

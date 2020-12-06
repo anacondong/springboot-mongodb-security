@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.djamware.springbootmongodbsecurity.controller;
+package com.lottomatching.controller;
 
-import com.djamware.springbootmongodbsecurity.domain.User;
-import com.djamware.springbootmongodbsecurity.service.CustomUserDetailsService;
+import com.lottomatching.domain.User;
+import com.lottomatching.service.CustomUserDetailsService;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

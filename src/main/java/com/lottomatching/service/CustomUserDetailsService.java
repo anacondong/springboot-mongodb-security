@@ -3,17 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.djamware.springbootmongodbsecurity.service;
+package com.lottomatching.service;
 
-import com.djamware.springbootmongodbsecurity.domain.Role;
-import com.djamware.springbootmongodbsecurity.domain.User;
-import com.djamware.springbootmongodbsecurity.repository.RoleRepository;
-import com.djamware.springbootmongodbsecurity.repository.UserRepository;
+import com.lottomatching.domain.Role;
+import com.lottomatching.domain.User;
+import com.lottomatching.repository.RoleRepository;
+import com.lottomatching.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

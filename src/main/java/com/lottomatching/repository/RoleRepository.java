@@ -3,17 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.djamware.springbootmongodbsecurity.repository;
+package com.lottomatching.repository;
 
-import com.djamware.springbootmongodbsecurity.domain.User;
+import com.lottomatching.domain.Role;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
  *
  * @author didin
  */
-public interface UserRepository extends MongoRepository<User, String> {
+public interface RoleRepository extends MongoRepository<Role, String> {
     
-    User findByEmail(String email);
-    
+    Role findByRole(String role);
 }
