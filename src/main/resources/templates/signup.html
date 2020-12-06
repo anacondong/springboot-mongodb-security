@@ -7,24 +7,24 @@
     <body>
         <div layout:fragment="content">
             <form class="form-signin" th:action="@{/signup}" method="post">
-                <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72" />
+                <img class="mb-4" src="/images/matching_logo.jpg" alt="" width="72" height="72" />
                 <h1 class="h3 mb-3 font-weight-normal">Signup Here</h1>
                 <div th:if="${param.error}">
-                    Invalid email and password.
+                    ไอดี หรือ รหัส ไม่ถูกต้อง.
                 </div>
                 <div th:if="${param.logout}">
-                    You have been logged out.
+                    คุณได้ออกจากระบบแล้ว.
                 </div>
-                <label for="inputUsername" class="sr-only">Username</label>
+                <label  class="sr-only">ไอดี</label>
                 <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Username" required="" />
-                <label for="inputPassword" class="sr-only">Password</label>
+                <label for="inputPassword" class="sr-only">รหัส</label>
                 <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="" />
-                <label for="inputFullname" class="sr-only">Full Name</label>
-                <input type="text" name="fullname" id="inputEmail" class="form-control" placeholder="Fullname" required="" />
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+                <label  class="sr-only">ชื่อ</label>
+                <input type="text" name="fullName" id="inputFullName" class="form-control" placeholder="Fullname" required="" />
+                <button class="btn btn-lg btn-primary btn-block" type="submit">ลงทะเบียน</button>
             </form>
             <form class="form-signin" th:action="@{/login}" method="get">
-                <button class="btn btn-md btn-success btn-block" type="Submit">Sign In</button>
+                <button class="btn btn-md btn-success btn-block" type="Submit">เข้าสู่ระบบ</button>
             </form>
         </div>
     </body>

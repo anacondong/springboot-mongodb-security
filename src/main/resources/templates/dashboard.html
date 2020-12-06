@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" 
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
     <head>
-        <title>Dashboard</title>
+        <title>หน้าหลัก Admin</title>
     </head>
     <body>
         <div layout:fragment="content">
-            <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-            <h2>This is your Admin Dashboard</h2>
+            <h1 th:inline="text">สวัสดี [[${#httpServletRequest.remoteUser}]]!</h1>
+            <h2>นี้คือ หน้าหลัก Admin</h2>
         </div>
     </body>
 </html>
