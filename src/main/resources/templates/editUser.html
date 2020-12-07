@@ -6,41 +6,32 @@
     </head>
     <body>
         <div layout:fragment="content">
-            <h1 th:inline="text">สวัสดี [[${#httpServletRequest.remoteUser}]]!</h1>
-            <h2>นี้คือ หน้าหลัก Admin</h2>
+            <h2>นี้คือ EditUser</h2>
 
-            <div>
-                ตาราง ผู้ใช้งาน
-                <table class="table table-hover">
-                    <thead class="thead-light">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">email</th>
-                        <th scope="col">fullName</th>
-                        <th scope="col">tel</th>
-                        <th scope="col">address</th>
-                        <th scope="col">note</th>
-                        <th scope="col">roles</th>
-                        <th scope="col">จัดการ</th>
-                    </tr>
-                    </thead>
+            <form class="form-signin" th:action="@{/editUser}" method="post">
+                <h1 class="h3 mb-3 font-weight-normal">แก้ไขข้อมูล ผู้ใช้งาน</h1>
+                <label>ไอดี</label>
+                <input type="hidden" name="email" th:value="${user.email}">
+                <input type="hidden" name="action" value="edit">
+                <input type="text" id="inputEmail" class="form-control" placeholder="Username" required="" th:value="${user.email}" disabled />
+                <label>รหัส</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required=""  th:value="${user.password}" disabled />
+                <label>ชื่อ</label>
+                <input type="text" name="fullName" id="inputFullName" class="form-control" placeholder="FullName" required="" th:value="${user.fullName}"  />
+                <label>โทร</label>
+                <input type="text" name="tel" id="inputTel" class="form-control" placeholder="Tel" required="" th:value="${user.tel}"  />
+                <label>ที่อยู่</label>
+                <input type="text" name="address" id="inputAddress" class="form-control" placeholder="Address" required="" th:value="${user.address}" />
+                <label>ข้อมูล</label>
+                <input type="text" name="note" id="inputNote" class="form-control" placeholder="Note" required="" th:value="${user.note}"  />
+                <button class="btn btn-lg btn-primary btn-block" type="submit">แก้ไข</button>
+            </form>
 
-                    <tr th:each="usList : ${usersList}">
-                        <th scope="row">#</th>
-                        <td th:text="${usList.email}">email</td>
-                        <td th:text="${usList.fullName}">fullName</td>
-                        <td th:text="${usList.tel}">tel</td>
-                        <td th:text="${usList.address}">address</td>
-                        <td th:text="${usList.note}">note</td>
-                        <td>
-                            <span th:each="role : ${usList.roles}">
-                                    <b th:text="${role.role}">role</b>
-                            </span>
-                        </td>
-                        <td><a class="nav-link" th:href="@{/editUser/{id}(id=${usList.email})}">แก้ไข</a></td>
-                    </tr>
-                </table>
-            </div>
+            <form class="form-signin" th:action="@{/editUser}" method="post">
+                <input type="hidden" name="email" th:value="${user.email}">
+                <input type="hidden" name="action" value="delete">
+                <button class="btn btn-md btn-success btn-block" type="Submit">ลบ</button>
+            </form>
 
         </div>
 

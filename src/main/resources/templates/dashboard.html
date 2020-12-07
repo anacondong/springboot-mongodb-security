@@ -8,6 +8,42 @@
         <div layout:fragment="content">
             <h1 th:inline="text">สวัสดี [[${#httpServletRequest.remoteUser}]]!</h1>
             <h2>นี้คือ หน้าหลัก Admin</h2>
+
+            <div>
+                ตาราง ผู้ใช้งาน
+                <table class="table table-hover">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">email</th>
+                        <th scope="col">fullName</th>
+                        <th scope="col">tel</th>
+                        <th scope="col">address</th>
+                        <th scope="col">note</th>
+                        <th scope="col">roles</th>
+                        <th scope="col">จัดการ</th>
+                    </tr>
+                    </thead>
+
+                    <tr th:each="usList : ${usersList}">
+                        <th scope="row">#</th>
+                        <td th:text="${usList.email}">email</td>
+                        <td th:text="${usList.fullName}">fullName</td>
+                        <td th:text="${usList.tel}">tel</td>
+                        <td th:text="${usList.address}">address</td>
+                        <td th:text="${usList.note}">note</td>
+                        <td>
+                            <span th:each="role : ${usList.roles}">
+                                    <b th:text="${role.role}">role</b>
+                            </span>
+                        </td>
+                        <td><a class="nav-link" th:href="@{/editUser/{id}(id=${usList.email})}">แก้ไข</a></td>
+                    </tr>
+                </table>
+            </div>
+
         </div>
+
+
     </body>
 </html>
