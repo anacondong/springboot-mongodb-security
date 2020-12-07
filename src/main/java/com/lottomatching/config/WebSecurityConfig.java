@@ -18,10 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-/**
- *
- * @author didin
- */
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -52,7 +49,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/signup").permitAll()
                 .antMatchers("/changePassword").permitAll()
                 .antMatchers( "/admin/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated().and().csrf().disable().formLogin().successHandler(customizeAuthenticationSuccessHandler)

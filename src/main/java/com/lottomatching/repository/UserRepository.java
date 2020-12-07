@@ -8,10 +8,6 @@ package com.lottomatching.repository;
 import com.lottomatching.domain.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-/**
- *
- * @author didin
- */
 public interface UserRepository extends MongoRepository<User, String> {
     
     User findByEmail(String email);

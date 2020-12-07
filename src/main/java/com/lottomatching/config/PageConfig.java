@@ -11,10 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/**
- *
- * @author didin
- */
 @Configuration
 public class PageConfig implements WebMvcConfigurer {
 
@@ -28,10 +24,11 @@ public class PageConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/home").setViewName("home");
         registry.addViewController("/").setViewName("home");
-        registry.addViewController("/admin/dashboard").setViewName("dashboard");
         registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/admin/editUser").setViewName("editUser");
         registry.addViewController("/changePassword").setViewName("changePassword");
+        registry.addViewController("/admin/dashboard").setViewName("dashboard");
+        registry.addViewController("/admin/editUser").setViewName("user/editUser");
+        registry.addViewController("/admin/listUser").setViewName("user/listUser");
     }
 
 }

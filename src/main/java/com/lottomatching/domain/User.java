@@ -12,10 +12,6 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-/**
- *
- * @author didin
- */
 @Document(collection = "user")
 public class User {
 

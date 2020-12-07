@@ -10,10 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
 
-/**
- *
- * @author didin
- */
+
 @Document(collection = "role")
 public class Role {
 

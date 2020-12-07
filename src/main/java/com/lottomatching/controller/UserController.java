@@ -30,8 +30,28 @@ public class UserController {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+
+    @RequestMapping(value = "/admin/listUser", method = RequestMethod.GET)
+    public ModelAndView listUser() {
+        ModelAndView modelAndView = new ModelAndView();
+        List<User> usersList = userService.findUsers();
+        modelAndView.addObject("usersList", usersList);
+        modelAndView.setViewName("user/listUser");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/admin/addUser", method = RequestMethod.GET)
+    public ModelAndView addUser() {
+        ModelAndView modelAndView = new ModelAndView();
+        User user = new User();
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("user/addUser");
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value = "/admin/addUser", method = RequestMethod.POST)
+    public ModelAndView addUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {
@@ -40,12 +60,14 @@ public class UserController {
                             "There is already a user registered with the username provided");
         }
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("signup");
+            modelAndView.addObject("messageError", "ไม่สำเร็จ");
+            modelAndView.setViewName("user/listUser");
         } else {
             userService.saveUser(user);
-            modelAndView.addObject("successMessage", "User has been registered successfully");
-            modelAndView.addObject("user", new User());
-            modelAndView.setViewName("login");
+            modelAndView.addObject("message", "สำเร็จ");
+            List<User> usersList = userService.findUsers();
+            modelAndView.addObject("usersList", usersList);
+            modelAndView.setViewName("user/listUser");
 
         }
         return modelAndView;
@@ -55,7 +77,7 @@ public class UserController {
     public ModelAndView editUser( @PathVariable("email") String email) {
         User user = userRepository.findByEmail(email);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("editUser");
+        modelAndView.setViewName("user/editUser");
         modelAndView.addObject("user", user);
         return modelAndView;
     }
@@ -80,19 +102,12 @@ public class UserController {
         modelAndView.addObject("currentUser", userAuth);
         modelAndView.addObject("currentUserRoles", userAuth.getRoles());
         modelAndView.addObject("fullName", userAuth.getFullName());
-        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-        modelAndView.setViewName("dashboard");
+        modelAndView.addObject("message", "สำเร็จ");
+        modelAndView.setViewName("user/listUser");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/changePassword/{email}", method = RequestMethod.GET)
-    public ModelAndView changePassword( @PathVariable("email") String email) {
-        User user = userRepository.findByEmail(email);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("changePassword");
-        modelAndView.addObject("user", user);
-        return modelAndView;
-    }
+
 
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
     public ModelAndView changePassword(  @RequestParam("email") String email, @RequestParam("password") String password,

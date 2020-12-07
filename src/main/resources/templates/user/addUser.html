@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" 
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
     <head>
-        <title>Signup</title>
+        <title>เพิ่มผู้ใช้งาน</title>
     </head>
     <body>
         <div layout:fragment="content">
-            <form class="form-signin" th:action="@{/signup}" method="post">
+            <form class="form-signin" th:action="@{/admin/addUser}" method="post">
                 <img class="mb-4" src="/images/matching_logo.jpg" alt="" width="72" height="72" />
                 <h1 class="h3 mb-3 font-weight-normal">ลงทะเบียน</h1>
                 <div th:if="${param.error}">
@@ -28,9 +28,6 @@
                 <label>ข้อมูล</label>
                 <input type="text" name="note" id="inputNote" class="form-control" placeholder="Note" required="" />
                 <button class="btn btn-lg btn-primary btn-block" type="submit">ลงทะเบียน</button>
-            </form>
-            <form class="form-signin" th:action="@{/login}" method="get">
-                <button class="btn btn-md btn-success btn-block" type="Submit">เข้าสู่ระบบ</button>
             </form>
         </div>
     </body>

@@ -6,6 +6,7 @@
 package com.lottomatching.controller;
 
 import com.lottomatching.domain.User;
+import com.lottomatching.repository.UserRepository;
 import com.lottomatching.service.CustomUserDetailsService;
 import javax.validation.Valid;
 
@@ -14,21 +15,21 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-/**
- *
- * @author didin
- */
 @Controller
-public class LoginController {
+public class HomeController {
 
     @Autowired
     private CustomUserDetailsService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() {
@@ -37,26 +38,14 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public ModelAndView signup() {
-        ModelAndView modelAndView = new ModelAndView();
-        User user = new User();
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("signup");
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/admin/dashboard", method = RequestMethod.GET)
+   @RequestMapping(value = "/admin/dashboard", method = RequestMethod.GET)
     public ModelAndView dashboard() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        List<User> usersList = userService.findUsers();
-        modelAndView.addObject("usersList", usersList);
         modelAndView.addObject("currentUser", user);
         modelAndView.addObject("currentUserRoles", user.getRoles());
         modelAndView.addObject("fullName", user.getFullName());
-        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
         modelAndView.setViewName("dashboard");
         return modelAndView;
     }
@@ -65,6 +54,15 @@ public class LoginController {
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/changePassword/{email}", method = RequestMethod.GET)
+    public ModelAndView changePassword( @PathVariable("email") String email) {
+        User user = userRepository.findByEmail(email);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("changePassword");
+        modelAndView.addObject("user", user);
         return modelAndView;
     }
 
