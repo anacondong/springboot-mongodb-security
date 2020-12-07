@@ -51,7 +51,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/editUser/{email}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/editUser/{email}", method = RequestMethod.GET)
     public ModelAndView editUser( @PathVariable("email") String email) {
         User user = userRepository.findByEmail(email);
         ModelAndView modelAndView = new ModelAndView();
@@ -60,7 +60,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/editUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/editUser", method = RequestMethod.POST)
     public ModelAndView editedUser(@Valid User user, @RequestParam("action") String action) {
         ModelAndView modelAndView = new ModelAndView();
         User userUpdate = userRepository.findByEmail(user.getEmail());
