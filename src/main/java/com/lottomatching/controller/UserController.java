@@ -6,6 +6,7 @@ import com.lottomatching.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,9 @@ public class UserController {
 
     @Autowired
     private CustomUserDetailsService userService;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
@@ -80,4 +84,36 @@ public class UserController {
         modelAndView.setViewName("dashboard");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/changePassword/{email}", method = RequestMethod.GET)
+    public ModelAndView changePassword( @PathVariable("email") String email) {
+        User user = userRepository.findByEmail(email);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("changePassword");
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    public ModelAndView changePassword(  @RequestParam("email") String email, @RequestParam("password") String password,
+                                       @RequestParam("newPassword") String newPassword,
+                                       @RequestParam("confirmPassword") String confirmPassword) {
+        ModelAndView modelAndView = new ModelAndView();
+        User userUpdate = userRepository.findByEmail(email);
+
+        if((bCryptPasswordEncoder.matches(password,userUpdate.getPassword())) && (newPassword.equals(confirmPassword))){
+            userUpdate.setPassword(bCryptPasswordEncoder.encode(newPassword));
+            userService.editUser(userUpdate);
+            modelAndView.addObject("message", "สำเร็จ");
+
+        }else {
+            modelAndView.addObject("messageError", "ไม่สำเร็จสำเร็จ");
+        }
+
+        User user = userRepository.findByEmail(email);
+        modelAndView.setViewName("changePassword");
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
 }
