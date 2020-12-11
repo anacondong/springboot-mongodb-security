@@ -15,4 +15,8 @@ public class NewsService {
     public News findNewsById(Long id){
         return newsRepository.findById(id).get();
     }
+
+    public void save(News news){
+        newsRepository.save(news);
+    }
 }

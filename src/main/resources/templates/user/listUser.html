@@ -15,19 +15,21 @@
     <div>
         ตาราง ผู้ใช้งาน
 
-        <form class="form-signin" th:action="@{/admin/addUser}" method="get">
-            <button class="btn btn-md btn-success btn-block" type="Submit">เพิ่มผู้ใช้</button>
+        <form class="text-right" th:action="@{/admin/addUser}" method="get">
+            <button class="btn btn-md btn-success" type="Submit"> เพิ่ม </button>
         </form>
+
+        <div class="text-right">จำนวนทั้งหมด: <b th:text="${#lists.size(usersList)}">[usersList]</b></div>
 
         <table class="table table-hover">
             <thead class="thead-light">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">email</th>
-                <th scope="col">fullName</th>
-                <th scope="col">tel</th>
-                <th scope="col">address</th>
-                <th scope="col">note</th>
+                <th scope="col">id</th>
+                <th scope="col">ชื่อ</th>
+                <th scope="col">โทร</th>
+                <th scope="col">ที่อยู่</th>
+                <th scope="col">โน้ต</th>
                 <th scope="col">roles</th>
                 <th scope="col">จัดการ</th>
             </tr>
@@ -35,7 +37,7 @@
 
             <tr th:each="usList : ${usersList}">
                 <th scope="row">#</th>
-                <td th:text="${usList.email}">email</td>
+                <td th:text="${usList.email}">Id</td>
                 <td th:text="${usList.fullName}">fullName</td>
                 <td th:text="${usList.tel}">tel</td>
                 <td th:text="${usList.address}">address</td>

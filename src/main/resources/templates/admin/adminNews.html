@@ -10,11 +10,11 @@
             <div class="alert alert-success" role="alert" th:text="${message}" th:if="${message != null}" >
                 message
             </div>
-            <form class="form-signin" th:action="@{/admin/news}" method="post">
+            <form th:action="@{/admin/news}" method="post">
                 <h1 class="h3 mb-3 font-weight-normal">แก้ไขข้อมูล ประกาศ</h1>
                 <div class="form-group">
                     <label>ประกาศ</label>
-                    <textarea name="msg" class="form-control" rows="10" >msg</textarea>
+                    <textarea name="msg" class="form-control" rows="10" th:text="${news.msg}">msg</textarea>
                 </div>
 
                 <button class="btn btn-lg btn-primary btn-block" type="submit">แก้ไข</button>
