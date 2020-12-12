@@ -20,7 +20,6 @@ public class NewsController {
     @RequestMapping(value = "/admin/news", method = RequestMethod.GET)
     public ModelAndView newsHome() {
         News news = NewsService.findNewsById(new Long(1));
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("news", news);
         modelAndView.setViewName("admin/adminNews");

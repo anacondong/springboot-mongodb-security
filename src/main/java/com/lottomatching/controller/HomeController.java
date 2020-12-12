@@ -89,3 +89,8 @@ public class HomeController {
 
 
 }
+
+
+//    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//    User user = userService.findUserByEmail(auth.getName());
+//    modelAndView.addObject("currentUser", user);

@@ -1,0 +1,27 @@
+package com.lottomatching.service;
+
+import com.lottomatching.domain.Lotto;
+import com.lottomatching.domain.News;
+import com.lottomatching.domain.User;
+import com.lottomatching.repository.LottoRepository;
+import com.lottomatching.repository.NewsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class LottoService {
+
+    @Autowired
+    private LottoRepository lottoRepository;
+
+    public List<Lotto> findByUser(User user){
+        return lottoRepository.findByUser(user);
+    }
+
+    public Lotto findByBarcode(String barcode){
+        return lottoRepository.findByBarcode(barcode);
+    }
+
+}
