@@ -9,6 +9,7 @@ import com.lottomatching.domain.Role;
 import com.lottomatching.domain.User;
 import com.lottomatching.repository.UserRepository;
 import com.lottomatching.service.CustomUserDetailsService;
+
 import javax.validation.Valid;
 
 import com.lottomatching.service.NewsService;
@@ -45,15 +46,15 @@ public class HomeController {
         return modelAndView;
     }
 
-   @RequestMapping(value = "/admin/dashboard", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/dashboard", method = RequestMethod.GET)
     public ModelAndView adminDashboard() {
         ModelAndView modelAndView = new ModelAndView();
 
-       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-       User currentUser = userService.findUserByEmail(auth.getName());
-       modelAndView.addObject("currentUser", currentUser);
-       modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
-       modelAndView.addObject("fullName", currentUser.getFullName());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", currentUser);
+        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
+        modelAndView.addObject("fullName", currentUser.getFullName());
         modelAndView.setViewName("admin/dashboard");
         return modelAndView;
     }
@@ -73,8 +74,8 @@ public class HomeController {
         modelAndView.setViewName("dashboard");
         return modelAndView;
     }
-    
-    @RequestMapping(value = {"/","/home"}, method = RequestMethod.GET)
+
+    @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
@@ -82,7 +83,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/changePassword/{email}", method = RequestMethod.GET)
-    public ModelAndView changePassword( @PathVariable("email") String email) {
+    public ModelAndView changePassword(@PathVariable("email") String email) {
         User user = userRepository.findByEmail(email);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("changePassword");

@@ -9,6 +9,7 @@ import com.lottomatching.domain.Role;
 import com.lottomatching.domain.User;
 import com.lottomatching.repository.RoleRepository;
 import com.lottomatching.repository.UserRepository;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -61,8 +62,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        User user = userRepository.findByEmail(email);  
-        if(user != null) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
             List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
             return buildUserForAuthentication(user, authorities);
         } else {

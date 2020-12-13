@@ -60,8 +60,6 @@ public class LottoController {
 //        }
 
 
-
-
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.findUserByEmail(auth.getName());
@@ -72,22 +70,22 @@ public class LottoController {
         try {
             List<String> barcodeList = Arrays.asList(barcode.split("\\r?\\n"));
 
-            for(String b : barcodeList){
+            for (String b : barcodeList) {
                 Lotto lotto = new Lotto();
                 lotto.setBarcode(b);
-                lotto.setRound(b.substring(2,4));
-                lotto.setGroup(b.substring(4,6));
-                lotto.setNumber(b.substring(6,10));
+                lotto.setRound(b.substring(2, 4));
+                lotto.setGroup(b.substring(4, 6));
+                lotto.setNumber(b.substring(6, 10));
                 lotto.setDate(new Date());
                 lotto.setEnabled(true);
                 lotto.setUser(currentUser);
-                sendCount = sendCount+ lottoService.save(lotto);
+                sendCount = sendCount + lottoService.save(lotto);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             modelAndView.addObject("messageError", "ดำเนินการไม่สำเร็จ กรุณาลองไหม่");
         }
         List<Lotto> lottos = lottoService.findByUserOrderByIdDesc(currentUser);
-        modelAndView.addObject("message", "จำนวนที่ส่งได้: "+sendCount);
+        modelAndView.addObject("message", "จำนวนที่ส่งได้: " + sendCount);
         modelAndView.addObject("lottos", lottos);
         modelAndView.setViewName("lotto/list");
         return modelAndView;

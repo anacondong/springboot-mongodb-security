@@ -17,7 +17,7 @@ public class Utils {
         List<Role> role = roles.stream()
                 .filter(c -> c.getRole().equals("ADMIN"))
                 .collect(Collectors.toList());
-        return (role.isEmpty())?"USER" : "ADMIN";
+        return (role.isEmpty()) ? "USER" : "ADMIN";
     }
 
 }

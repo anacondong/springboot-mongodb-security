@@ -12,11 +12,11 @@ public class NewsService {
     @Autowired
     private NewsRepository newsRepository;
 
-    public News findNewsById(Long id){
+    public News findNewsById(Long id) {
         return newsRepository.findById(id).get();
     }
 
-    public void save(News news){
+    public void save(News news) {
         newsRepository.save(news);
     }
 }

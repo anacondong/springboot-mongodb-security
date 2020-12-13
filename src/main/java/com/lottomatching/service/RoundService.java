@@ -14,7 +14,8 @@ public class RoundService {
 
     @Autowired
     private RoundRepository roundRepository;
-    public List<Round> findAll(){
+
+    public List<Round> findAll() {
         return roundRepository.findAll();
     }
 }

@@ -49,10 +49,10 @@ public class SpringBootMongodbSecurityApplication {
 
             //init admin
             User userAdmin = userRepository.findByEmail("admin");
-            if(userAdmin == null){
+            if (userAdmin == null) {
                 Role newAdminRole = roleRepository.findByRole("ADMIN");
                 userAdmin = new User();
-                   userAdmin.setEmail("admin");
+                userAdmin.setEmail("admin");
                 userAdmin.setPassword("$2a$10$KXcCwpQzwA6DRY0e2Du2duju7b7hxDBljYi9tGwiLUFT0DeLnecQu"); // admin
                 userAdmin.setEnabled(true);
                 userAdmin.setRoles(new HashSet<>(Arrays.asList(newAdminRole)));
@@ -63,7 +63,7 @@ public class SpringBootMongodbSecurityApplication {
 
             // init news
             List<News> newsList = newsRepository.findAll();
-            if(newsList.isEmpty()){
+            if (newsList.isEmpty()) {
                 News news = new News();
                 news.setId(1);
                 news.setMsg("This is News !!");
@@ -71,18 +71,18 @@ public class SpringBootMongodbSecurityApplication {
             }
 
             // init round
-           List<Round> roundList = roundRepository.findAll();
+            List<Round> roundList = roundRepository.findAll();
             DecimalFormat df = new DecimalFormat("00");
-            if(roundList.isEmpty()){
-                for(long i = 0; i < 100; i++){
+            if (roundList.isEmpty()) {
+                for (long i = 0; i < 100; i++) {
                     Round r = new Round();
                     r.setId(i);
                     r.setNumber(df.format(i));
                     r.setEnabled(false);
                     if ((i % 2) == 0) {
-                        r.setName(r.getNumber()+" : โค้วต้า");
+                        r.setName(r.getNumber() + " : โค้วต้า");
                     } else {
-                        r.setName(r.getNumber()+" : เสรี");
+                        r.setName(r.getNumber() + " : เสรี");
                     }
                     roundRepository.save(r);
                 }

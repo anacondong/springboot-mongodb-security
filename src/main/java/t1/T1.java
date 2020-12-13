@@ -5,7 +5,7 @@ import java.util.List;
 
 public class T1 {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         String barcode = "1933024820482050";
         String barcodes = "1933024820482050\n" +
@@ -117,12 +117,12 @@ public class T1 {
 //        System.out.println("number: "+barcode.substring(6,10)); //4820
 
         List<String> barcodeList = Arrays.asList(barcodes.split("\\r?\\n"));
-        for(String b : barcodeList){
+        for (String b : barcodeList) {
             System.out.println("========================================");
-            System.out.println("barcode: "+b);
-            System.out.println("round: "+b.substring(2,4));
-            System.out.println("group: "+b.substring(4,6));
-            System.out.println("number: "+b.substring(6,10));
+            System.out.println("barcode: " + b);
+            System.out.println("round: " + b.substring(2, 4));
+            System.out.println("group: " + b.substring(4, 6));
+            System.out.println("number: " + b.substring(6, 10));
             System.out.println("========================================");
         }
 

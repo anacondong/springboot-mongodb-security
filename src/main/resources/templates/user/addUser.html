@@ -1,35 +1,36 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" 
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
-    <head>
-        <title>เพิ่มผู้ใช้งาน</title>
-    </head>
-    <body>
-        <div layout:fragment="content">
-            <form th:action="@{/admin/addUser}" method="post">
-                <img class="mb-4" src="/images/matching_logo.jpg" alt="" width="72" height="72" />
-                <h1 class="h3 mb-3 font-weight-normal">ลงทะเบียน</h1>
-                <div th:if="${param.error}">
-                    ไอดี หรือ รหัส ไม่ถูกต้อง.
-                </div>
-                <div th:if="${param.logout}">
-                    คุณได้ออกจากระบบแล้ว.
-                </div>
-                <label>ไอดี</label>
-                <input type="text" name="email" id="inputEmail" class="form-control" placeholder="Username" required="" />
-                <label>รหัส</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="" />
-                <label>ชื่อ</label>
-                <input type="text" name="fullName" id="inputFullName" class="form-control" placeholder="FullName" required="" />
-                <label>โทร</label>
-                <input type="text" name="tel" id="inputTel" class="form-control" placeholder="Tel" required="" />
-                <label>ที่อยู่</label>
-                <input type="text" name="address" id="inputAddress" class="form-control" placeholder="Address" required="" />
-                <label>ข้อมูล</label>
-                <input type="text" name="note" id="inputNote" class="form-control" placeholder="Note" required="" />
-                <br/>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">ลงทะเบียน</button>
-            </form>
+<head>
+    <title>เพิ่มผู้ใช้งาน</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <form th:action="@{/admin/addUser}" method="post">
+        <img class="mb-4" src="/images/matching_logo.jpg" alt="" width="72" height="72"/>
+        <h1 class="h3 mb-3 font-weight-normal">ลงทะเบียน</h1>
+        <div th:if="${param.error}">
+            ไอดี หรือ รหัส ไม่ถูกต้อง.
         </div>
-    </body>
+        <div th:if="${param.logout}">
+            คุณได้ออกจากระบบแล้ว.
+        </div>
+        <label>ไอดี</label>
+        <input type="text" name="email" id="inputEmail" class="form-control" placeholder="Username" required=""/>
+        <label>รหัส</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password"
+               required=""/>
+        <label>ชื่อ</label>
+        <input type="text" name="fullName" id="inputFullName" class="form-control" placeholder="FullName" required=""/>
+        <label>โทร</label>
+        <input type="text" name="tel" id="inputTel" class="form-control" placeholder="Tel" required=""/>
+        <label>ที่อยู่</label>
+        <input type="text" name="address" id="inputAddress" class="form-control" placeholder="Address" required=""/>
+        <label>ข้อมูล</label>
+        <input type="text" name="note" id="inputNote" class="form-control" placeholder="Note" required=""/>
+        <br/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">ลงทะเบียน</button>
+    </form>
+</div>
+</body>
 </html>

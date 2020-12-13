@@ -16,11 +16,11 @@ public class LottoService {
     @Autowired
     private LottoRepository lottoRepository;
 
-    public List<Lotto> findByUserOrderByIdDesc(User user){
+    public List<Lotto> findByUserOrderByIdDesc(User user) {
         return lottoRepository.findByUserOrderByIdDesc(user);
     }
 
-    public Lotto findByBarcode(String barcode){
+    public Lotto findByBarcode(String barcode) {
         return lottoRepository.findByBarcode(barcode);
     }
 
@@ -28,7 +28,7 @@ public class LottoService {
         try {
             lottoRepository.save(lotto);
             return 1;
-        } catch (Exception e){
+        } catch (Exception e) {
             return 0;
         }
     }

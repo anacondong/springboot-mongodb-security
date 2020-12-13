@@ -1,26 +1,27 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" 
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
-    <head>
-        <title>โปรแกรมจับคู่ฉลาก</title>
-    </head>
-    <body>
-        <div layout:fragment="content">
-            <form class="form-signin" th:action="@{/login}" method="post">
-                <img class="mb-4" src="/images/matching_logo.jpg" alt="" width="72" height="72" />
-                <h1 class="h3 mb-3 font-weight-normal">กรุณาใส่ข้อมูล</h1>
-                <div class="alert alert-danger" role="alert" th:if="${param.error}">
-                    ไอดี หรือ รหัส ไม่ถูกต้อง.
-                </div>
-                <div class="alert alert-success" role="alert" th:if="${param.logout}">
-                    คุณได้ออกจากระบบแล้ว.
-                </div>
-                <label for="inputEmail" class="sr-only">ไอดี</label>
-                <input type="text" name="email" id="inputEmail" class="form-control" placeholder="Email" required="" />
-                <label for="inputPassword" class="sr-only">รหัส</label>
-                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="" />
-                <button class="btn btn-lg btn-primary btn-block" type="submit">เข้าสู่ระบบ</button>
-            </form>
+<head>
+    <title>โปรแกรมจับคู่ฉลาก</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <form class="form-signin" th:action="@{/login}" method="post">
+        <img class="mb-4" src="/images/matching_logo.jpg" alt="" width="72" height="72"/>
+        <h1 class="h3 mb-3 font-weight-normal">กรุณาใส่ข้อมูล</h1>
+        <div class="alert alert-danger" role="alert" th:if="${param.error}">
+            ไอดี หรือ รหัส ไม่ถูกต้อง.
         </div>
-    </body>
+        <div class="alert alert-success" role="alert" th:if="${param.logout}">
+            คุณได้ออกจากระบบแล้ว.
+        </div>
+        <label for="inputEmail" class="sr-only">ไอดี</label>
+        <input type="text" name="email" id="inputEmail" class="form-control" placeholder="Email" required=""/>
+        <label for="inputPassword" class="sr-only">รหัส</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password"
+               required=""/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">เข้าสู่ระบบ</button>
+    </form>
+</div>
+</body>
 </html>

@@ -1,75 +1,85 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"	
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-    <head>
-        <title>Super Matching</title>
-        <meta name="description" content=""/>
-        <link rel="shortcut icon" href="/images/matching_logo.jpg">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
-        <link rel="stylesheet" href="/css/style.css" />
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <span class="navbar-brand" >โปรแกรม จับคู่ฉลาก</span>
+<head>
+    <title>Super Matching</title>
+    <meta name="description" content=""/>
+    <link rel="shortcut icon" href="/images/matching_logo.jpg">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <span class="navbar-brand">โปรแกรม จับคู่ฉลาก</span>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item " th:if="${currentUserRoles == 'USER'}" >
-                        <a class="nav-link" href="/user/lotto">ส่งเลข</a>
-                    </li>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item " th:if="${currentUserRoles == 'USER'}">
+                <a class="nav-link" href="/user/lotto">ส่งเลข</a>
+            </li>
 
-                    <li class="nav-item " th:if="${currentUserRoles == 'USER'}" >
-                        <a class="nav-link" href="/user/match">ชนเลข</a>
-                    </li>
+            <li class="nav-item " th:if="${currentUserRoles == 'USER'}">
+                <a class="nav-link" href="/user/match">ชนเลข</a>
+            </li>
 
-                    <li class="nav-item " th:if="${currentUserRoles == 'USER'}" >
-                        <a class="nav-link" href="/user/notmatch">เลขไม่ชน</a>
-                    </li>
+            <li class="nav-item " th:if="${currentUserRoles == 'USER'}">
+                <a class="nav-link" href="/user/notmatch">เลขไม่ชน</a>
+            </li>
 
-                    <li class="nav-item " th:if="${currentUserRoles == 'ADMIN'}" >
-                        <a class="nav-link" href="/admin/listUser">จัดการผู้ใช้งาน</a>
-                    </li>
+            <li class="nav-item " th:if="${currentUserRoles == 'ADMIN'}">
+                <a class="nav-link" href="/admin/listUser">จัดการผู้ใช้งาน</a>
+            </li>
 
-                    <li class="nav-item " th:if="${currentUserRoles == 'ADMIN'}" >
-                        <a class="nav-link" href="/admin/news">จัดการประกาศ</a>
-                    </li>
+            <li class="nav-item " th:if="${currentUserRoles == 'ADMIN'}">
+                <a class="nav-link" href="/admin/news">จัดการประกาศ</a>
+            </li>
 
-                    <li class="nav-item " th:if="${currentUserRoles == 'ADMIN'}" >
-                        <a class="nav-link" href="/admin/round">จัดการงวด</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item" th:if="${currentUser}">
-                        <a class="nav-link" th:href="@{/changePassword/{id}(id=${currentUser.email})}">เปลียนรหัสผ่าน</a>
-                        <form th:action="@{/logout}" method="post">
-                            <button class="btn btn-outline-danger" type="submit">ออกจากระบบ</button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+            <li class="nav-item " th:if="${currentUserRoles == 'ADMIN'}">
+                <a class="nav-link" href="/admin/round">จัดการงวด</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item" th:if="${currentUser}">
+                <a class="nav-link" th:href="@{/changePassword/{id}(id=${currentUser.email})}">เปลียนรหัสผ่าน</a>
+                <form th:action="@{/logout}" method="post">
+                    <button class="btn btn-outline-danger" type="submit">ออกจากระบบ</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
 
-        <div th:if="${currentUser}">
-            <table  class="table">
-                <tr class="table-info">
-                    <td>ID: <b th:if="${currentUser}" th:text="${currentUser.email}">email</b></td>
-                    <td>ชื่อ: <b th:if="${currentUser}" th:text="${currentUser.fullName}">fullName</b></td>
-                    <td>โทร: <b th:if="${currentUser}" th:text="${currentUser.tel}">tel</b></td>
-                    <td>Time: <b th:if="${currentUser}" th:text="${#dates.format(#dates.createNow(),'YYYY/MM/dd HH:mm')}"></b></td>
-                    <td><button  class="btn btn-outline-secondary" onclick="window.print()">พิมร์หน้านี้</button></td>
-                </tr>
-            </table>
-        </div>
+<div th:if="${currentUser}">
+    <table class="table">
+        <tr class="table-info">
+            <td>ID: <b th:if="${currentUser}" th:text="${currentUser.email}">email</b></td>
+            <td>ชื่อ: <b th:if="${currentUser}" th:text="${currentUser.fullName}">fullName</b></td>
+            <td>โทร: <b th:if="${currentUser}" th:text="${currentUser.tel}">tel</b></td>
+            <td>Time: <b th:if="${currentUser}" th:text="${#dates.format(#dates.createNow(),'YYYY/MM/dd HH:mm')}"></b>
+            </td>
+            <td>
+                <button class="btn btn-outline-secondary" onclick="window.print()">พิมร์หน้านี้</button>
+            </td>
+        </tr>
+    </table>
+</div>
 
 
-        <div class="container">
-            <div layout:fragment="content"></div>
-        </div>
-        <!-- /.container -->
+<div class="container">
+    <div layout:fragment="content"></div>
+</div>
+<!-- /.container -->
 
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    </body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
 </html>

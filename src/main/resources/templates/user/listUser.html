@@ -6,17 +6,17 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="alert alert-success" role="alert" th:text="${message}" th:if="${message != null}" >
+    <div class="alert alert-success" role="alert" th:text="${message}" th:if="${message != null}">
         message
     </div>
-    <div class="alert alert-danger" role="alert" th:text="${messageError}" th:if="${messageError != null}" >
+    <div class="alert alert-danger" role="alert" th:text="${messageError}" th:if="${messageError != null}">
         messageError
     </div>
     <div>
         ตาราง ผู้ใช้งาน
 
         <form class="text-right" th:action="@{/admin/addUser}" method="get">
-            <button class="btn btn-success btn-lg btn-block" type="Submit"> เพิ่ม </button>
+            <button class="btn btn-success btn-lg btn-block" type="Submit"> เพิ่ม</button>
         </form>
 
         <div class="text-right">จำนวนทั้งหมด: <b th:text="${#lists.size(usersList)}">[usersList]</b></div>

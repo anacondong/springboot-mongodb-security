@@ -6,10 +6,10 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="alert alert-success" role="alert" th:text="${message}" th:if="${message != null}" >
+    <div class="alert alert-success" role="alert" th:text="${message}" th:if="${message != null}">
         message
     </div>
-    <div class="alert alert-danger" role="alert" th:text="${messageError}" th:if="${messageError != null}" >
+    <div class="alert alert-danger" role="alert" th:text="${messageError}" th:if="${messageError != null}">
         messageError
     </div>
     <div>
@@ -18,7 +18,7 @@
         <form class="text-center" th:action="@{/user/lotto/add}" method="post">
             <textarea class="form-control" name="barcode" rows="8" placeholder="กรอกบาร์โค้ดที่นี้"></textarea>
             <br/>
-            <button class="btn btn-success btn-lg btn-block" type="Submit"> ส่งข้อมูล </button>
+            <button class="btn btn-success btn-lg btn-block" type="Submit"> ส่งข้อมูล</button>
         </form>
 
         <div class="text-right">จำนวนทั้งหมด: <b th:text="${#lists.size(lottos)}">[usersList]</b></div>

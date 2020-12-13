@@ -98,7 +98,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/admin/editUser/{email}", method = RequestMethod.GET)
-    public ModelAndView editUser( @PathVariable("email") String email) {
+    public ModelAndView editUser(@PathVariable("email") String email) {
         User user = userRepository.findByEmail(email);
         ModelAndView modelAndView = new ModelAndView();
 
@@ -118,16 +118,16 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
 
         User userUpdate = userRepository.findByEmail(user.getEmail());
-            if(action.equals("edit")) {
-                userUpdate.setFullName(user.getFullName());
-                userUpdate.setTel(user.getTel());
-                userUpdate.setAddress(user.getAddress());
-                userUpdate.setNote(user.getNote());
-            }else if(action.equals("delete")) {
-                userUpdate.setEnabled(false);
-            }else if(action.equals("setPassword")) {
-                userUpdate.setPassword("$2a$10$KXcCwpQzwA6DRY0e2Du2duju7b7hxDBljYi9tGwiLUFT0DeLnecQu");
-            }
+        if (action.equals("edit")) {
+            userUpdate.setFullName(user.getFullName());
+            userUpdate.setTel(user.getTel());
+            userUpdate.setAddress(user.getAddress());
+            userUpdate.setNote(user.getNote());
+        } else if (action.equals("delete")) {
+            userUpdate.setEnabled(false);
+        } else if (action.equals("setPassword")) {
+            userUpdate.setPassword("$2a$10$KXcCwpQzwA6DRY0e2Du2duju7b7hxDBljYi9tGwiLUFT0DeLnecQu");
+        }
         userService.editUser(userUpdate);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -144,20 +144,19 @@ public class UserController {
     }
 
 
-
     @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
-    public ModelAndView changePassword(  @RequestParam("email") String email, @RequestParam("password") String password,
+    public ModelAndView changePassword(@RequestParam("email") String email, @RequestParam("password") String password,
                                        @RequestParam("newPassword") String newPassword,
                                        @RequestParam("confirmPassword") String confirmPassword) {
         ModelAndView modelAndView = new ModelAndView();
         User userUpdate = userRepository.findByEmail(email);
 
-        if((bCryptPasswordEncoder.matches(password,userUpdate.getPassword())) && (newPassword.equals(confirmPassword))){
+        if ((bCryptPasswordEncoder.matches(password, userUpdate.getPassword())) && (newPassword.equals(confirmPassword))) {
             userUpdate.setPassword(bCryptPasswordEncoder.encode(newPassword));
             userService.editUser(userUpdate);
             modelAndView.addObject("message", "ดำเนินการสำเร็จ");
 
-        }else {
+        } else {
             modelAndView.addObject("messageError", "ดำเนินการไม่สำเร็จ");
         }
 

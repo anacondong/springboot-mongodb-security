@@ -6,10 +6,10 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <div class="alert alert-success" role="alert" th:text="${message}" th:if="${message != null}" >
+    <div class="alert alert-success" role="alert" th:text="${message}" th:if="${message != null}">
         message
     </div>
-    <div class="alert alert-danger" role="alert" th:text="${messageError}" th:if="${messageError != null}" >
+    <div class="alert alert-danger" role="alert" th:text="${messageError}" th:if="${messageError != null}">
         messageError
     </div>
     <div>
@@ -31,7 +31,7 @@
                 <th scope="row" th:text="${roundStat.index+1}">#</th>
                 <td th:text="${round.number}">barcode</td>
                 <td th:text="${round.name}">number</td>
-                <td >
+                <td>
                     <button th:if="${round.enabled == true}" type="button" class="btn btn-success">เปิด</button>
                     <button th:if="${round.enabled == false}" type="button" class="btn btn-danger">ปิด</button>
                 </td>
