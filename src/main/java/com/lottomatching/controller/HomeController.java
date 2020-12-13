@@ -38,13 +38,6 @@ public class HomeController {
     @Autowired
     private NewsService newsService;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView login() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("login");
-        return modelAndView;
-    }
-
    @RequestMapping(value = "/admin/dashboard", method = RequestMethod.GET)
     public ModelAndView adminDashboard() {
         ModelAndView modelAndView = new ModelAndView();
