@@ -10,10 +10,8 @@
             <div class="alert alert-success" role="alert" th:text="${message}" th:if="${message != null}" >
                 message
             </div>
-            <form class="form-signin" th:action="@{/admin/editUser}" method="post">
+            <form th:action="@{/admin/editUser}" method="post">
                 <h1 class="h3 mb-3 font-weight-normal">แก้ไขข้อมูล ผู้ใช้งาน</h1>
-
-
                 <label>ไอดี</label>
                 <input type="hidden" name="email" th:value="${user.email}">
                 <input type="hidden" name="action" value="edit">
@@ -30,6 +28,14 @@
                 <input type="text" name="note" id="inputNote" class="form-control" placeholder="Note" required="" th:value="${user.note}"  />
                 <button class="btn btn-lg btn-primary btn-block" type="submit">แก้ไข</button>
             </form>
+
+
+            <form class="form-signin" th:action="@{/admin/editUser}" method="post">
+                <input type="hidden" name="email" th:value="${user.email}">
+                <input type="hidden" name="action" value="setPassword">
+                <button class="btn btn-md btn-success btn-block" type="Submit">เปลียนรหัสค่าเริ่มต้น</button>
+            </form>
+
 
             <form class="form-signin" th:action="@{/admin/editUser}" method="post">
                 <input type="hidden" name="email" th:value="${user.email}">

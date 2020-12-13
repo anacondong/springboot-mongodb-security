@@ -35,6 +35,9 @@ public class UserController {
     public ModelAndView listUser() {
         ModelAndView modelAndView = new ModelAndView();
         List<User> usersList = userService.findUsers();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", user);
         modelAndView.addObject("usersList", usersList);
         modelAndView.setViewName("user/listUser");
         return modelAndView;
@@ -43,8 +46,11 @@ public class UserController {
     @RequestMapping(value = "/admin/addUser", method = RequestMethod.GET)
     public ModelAndView addUser() {
         ModelAndView modelAndView = new ModelAndView();
-        User user = new User();
-        modelAndView.addObject("user", user);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", user);
+        User us = new User();
+        modelAndView.addObject("user", us);
         modelAndView.setViewName("user/addUser");
         return modelAndView;
     }
@@ -53,6 +59,10 @@ public class UserController {
     @RequestMapping(value = "/admin/addUser", method = RequestMethod.POST)
     public ModelAndView addUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", currentUser);
+
         User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {
             bindingResult
@@ -77,6 +87,11 @@ public class UserController {
     public ModelAndView editUser( @PathVariable("email") String email) {
         User user = userRepository.findByEmail(email);
         ModelAndView modelAndView = new ModelAndView();
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", currentUser);
+
         modelAndView.setViewName("user/editUser");
         modelAndView.addObject("user", user);
         return modelAndView;
@@ -85,6 +100,7 @@ public class UserController {
     @RequestMapping(value = "/admin/editUser", method = RequestMethod.POST)
     public ModelAndView editedUser(@Valid User user, @RequestParam("action") String action) {
         ModelAndView modelAndView = new ModelAndView();
+
         User userUpdate = userRepository.findByEmail(user.getEmail());
             if(action.equals("edit")) {
                 userUpdate.setFullName(user.getFullName());
@@ -93,6 +109,8 @@ public class UserController {
                 userUpdate.setNote(user.getNote());
             }else if(action.equals("delete")) {
                 userUpdate.setEnabled(false);
+            }else if(action.equals("setPassword")) {
+                userUpdate.setPassword("$2a$10$KXcCwpQzwA6DRY0e2Du2duju7b7hxDBljYi9tGwiLUFT0DeLnecQu");
             }
         userService.editUser(userUpdate);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -128,6 +146,11 @@ public class UserController {
         User user = userRepository.findByEmail(email);
         modelAndView.setViewName("changePassword");
         modelAndView.addObject("user", user);
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", currentUser);
+
         return modelAndView;
     }
 

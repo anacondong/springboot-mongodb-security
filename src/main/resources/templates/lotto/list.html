@@ -15,7 +15,7 @@
     <div>
         ตาราง lotto
 
-        <form class="text-center" th:action="@{/lotto/add}" method="post">
+        <form class="text-center" th:action="@{/user/lotto/add}" method="post">
             <textarea class="form-control" name="barcode" rows="8" placeholder="กรอกบาร์โค้ดที่นี้"></textarea>
             <button class="btn btn-success btn-lg btn-block" type="Submit"> ส่งข้อมูล </button>
         </form>
@@ -26,6 +26,7 @@
             <thead class="thead-light">
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">บาร์โค้ด</th>
                 <th scope="col">ฉลากที่</th>
                 <th scope="col">งวดที่</th>
                 <th scope="col">ชุดที่</th>
@@ -34,7 +35,8 @@
             </thead>
 
             <tr th:each="lotto : ${lottos}">
-                <th scope="row">#</th>
+                <th scope="row" th:text="${lottoStat.index+1}">#</th>
+                <td th:text="${lotto.barcode}">barcode</td>
                 <td th:text="${lotto.number}">number</td>
                 <td th:text="${lotto.round}">round</td>
                 <td th:text="${lotto.group}">group</td>

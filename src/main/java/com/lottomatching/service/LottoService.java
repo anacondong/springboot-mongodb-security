@@ -24,4 +24,13 @@ public class LottoService {
         return lottoRepository.findByBarcode(barcode);
     }
 
+    public int save(Lotto lotto) {
+        try {
+            lottoRepository.save(lotto);
+            return 1;
+        } catch (Exception e){
+            return 0;
+        }
+    }
+
 }

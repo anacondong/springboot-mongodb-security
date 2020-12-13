@@ -16,7 +16,7 @@
         ตาราง ผู้ใช้งาน
 
         <form class="text-right" th:action="@{/admin/addUser}" method="get">
-            <button class="btn btn-md btn-success" type="Submit"> เพิ่ม </button>
+            <button class="btn btn-success btn-lg btn-block" type="Submit"> เพิ่ม </button>
         </form>
 
         <div class="text-right">จำนวนทั้งหมด: <b th:text="${#lists.size(usersList)}">[usersList]</b></div>
@@ -36,7 +36,7 @@
             </thead>
 
             <tr th:each="usList : ${usersList}">
-                <th scope="row">#</th>
+                <th scope="row" th:text="${usListStat.index+1}">#</th>
                 <td th:text="${usList.email}">Id</td>
                 <td th:text="${usList.fullName}">fullName</td>
                 <td th:text="${usList.tel}">tel</td>

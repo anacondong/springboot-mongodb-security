@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"	
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     <head>
-        <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Default</title>
+        <title>Super Matching</title>
         <meta name="description" content=""/>
         <link rel="shortcut icon" href="/images/matching_logo.jpg">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
@@ -18,10 +18,6 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item ">
-                        <a class="nav-link" href="/admin/dashboard">หน้าหลัก <span class="sr-only">(current)</span></a>
-                    </li>
-
                     <li class="nav-item " th:if="${currentUserRoles == 'USER'}" >
                         <a class="nav-link" href="/user/lotto">ส่งเลข</a>
                     </li>
