@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+<head>
+    <title>หน้าหลัก Admin</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="alert alert-success" role="alert" th:text="${message}" th:if="${message != null}" >
+        message
+    </div>
+    <div class="alert alert-danger" role="alert" th:text="${messageError}" th:if="${messageError != null}" >
+        messageError
+    </div>
+    <div>
+        ตาราง round
+        <div class="text-right">จำนวนทั้งหมด: <b th:text="${#lists.size(roundList)}">[roundList]</b></div>
+
+        <table class="table table-hover">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">งวดที่</th>
+                <th scope="col">ชื่อ</th>
+                <th scope="col">สถานะ</th>
+                <th scope="col">จัดการ</th>
+            </tr>
+            </thead>
+
+            <tr th:each="round : ${roundList}">
+                <th scope="row" th:text="${roundStat.index+1}">#</th>
+                <td th:text="${round.number}">barcode</td>
+                <td th:text="${round.name}">number</td>
+                <td >
+                    <button th:if="${round.enabled == true}" type="button" class="btn btn-success">เปิด</button>
+                    <button th:if="${round.enabled == false}" type="button" class="btn btn-danger">ปิด</button>
+                </td>
+                <td>
+                    <a class="btn btn-link" href="#">แก้ไข</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+
+</body>
+</html>
