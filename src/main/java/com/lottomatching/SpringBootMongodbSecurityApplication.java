@@ -2,9 +2,11 @@ package com.lottomatching;
 
 import com.lottomatching.domain.News;
 import com.lottomatching.domain.Role;
+import com.lottomatching.domain.Round;
 import com.lottomatching.domain.User;
 import com.lottomatching.repository.NewsRepository;
 import com.lottomatching.repository.RoleRepository;
+import com.lottomatching.repository.RoundRepository;
 import com.lottomatching.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -25,7 +28,7 @@ public class SpringBootMongodbSecurityApplication {
     }
 
     @Bean
-    CommandLineRunner init(RoleRepository roleRepository, UserRepository userRepository, NewsRepository newsRepository) {
+    CommandLineRunner init(RoleRepository roleRepository, UserRepository userRepository, NewsRepository newsRepository, RoundRepository roundRepository) {
 
         return args -> {
 
@@ -66,6 +69,26 @@ public class SpringBootMongodbSecurityApplication {
                 news.setMsg("This is News !!");
                 newsRepository.save(news);
             }
+
+            // init round
+           List<Round> roundList = roundRepository.findAll();
+            DecimalFormat df = new DecimalFormat("00");
+            if(roundList.isEmpty()){
+                for(long i = 0; i < 100; i++){
+                    Round r = new Round();
+                    r.setId(i);
+                    r.setNumber(df.format(i));
+                    r.setEnabled(false);
+                    if ((i % 2) == 0) {
+                        r.setName(r.getNumber()+" : โค้วต้า");
+                    } else {
+                        r.setName(r.getNumber()+" : เสรี");
+                    }
+                    roundRepository.save(r);
+                }
+            }
+
+
         };
 
     }
