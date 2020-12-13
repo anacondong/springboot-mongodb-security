@@ -9,10 +9,10 @@
             <form class="form-signin" th:action="@{/login}" method="post">
                 <img class="mb-4" src="/images/matching_logo.jpg" alt="" width="72" height="72" />
                 <h1 class="h3 mb-3 font-weight-normal">กรุณาใส่ข้อมูล</h1>
-                <div th:if="${param.error}">
+                <div class="alert alert-danger" role="alert" th:if="${param.error}">
                     ไอดี หรือ รหัส ไม่ถูกต้อง.
                 </div>
-                <div th:if="${param.logout}">
+                <div class="alert alert-success" role="alert" th:if="${param.logout}">
                     คุณได้ออกจากระบบแล้ว.
                 </div>
                 <label for="inputEmail" class="sr-only">ไอดี</label>

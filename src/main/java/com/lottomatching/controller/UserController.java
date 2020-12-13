@@ -3,6 +3,7 @@ package com.lottomatching.controller;
 import com.lottomatching.domain.User;
 import com.lottomatching.repository.UserRepository;
 import com.lottomatching.service.CustomUserDetailsService;
+import com.lottomatching.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,9 +36,13 @@ public class UserController {
     public ModelAndView listUser() {
         ModelAndView modelAndView = new ModelAndView();
         List<User> usersList = userService.findUsers();
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", user);
+        User currentUser = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", currentUser);
+        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
+        modelAndView.addObject("fullName", currentUser.getFullName());
+
         modelAndView.addObject("usersList", usersList);
         modelAndView.setViewName("user/listUser");
         return modelAndView;
@@ -46,9 +51,14 @@ public class UserController {
     @RequestMapping(value = "/admin/addUser", method = RequestMethod.GET)
     public ModelAndView addUser() {
         ModelAndView modelAndView = new ModelAndView();
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", user);
+        User currentUser = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", currentUser);
+        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
+        modelAndView.addObject("fullName", currentUser.getFullName());
+
+
         User us = new User();
         modelAndView.addObject("user", us);
         modelAndView.setViewName("user/addUser");
@@ -59,9 +69,6 @@ public class UserController {
     @RequestMapping(value = "/admin/addUser", method = RequestMethod.POST)
     public ModelAndView addUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", currentUser);
 
         User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {
@@ -70,16 +77,23 @@ public class UserController {
                             "There is already a user registered with the username provided");
         }
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("messageError", "ไม่สำเร็จ");
+            modelAndView.addObject("messageError", "ดำเนินการไม่สำเร็จ");
             modelAndView.setViewName("user/listUser");
         } else {
             userService.saveUser(user);
-            modelAndView.addObject("message", "สำเร็จ");
+            modelAndView.addObject("message", "ดำเนินการสำเร็จ");
             List<User> usersList = userService.findUsers();
             modelAndView.addObject("usersList", usersList);
             modelAndView.setViewName("user/listUser");
 
         }
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", currentUser);
+        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
+        modelAndView.addObject("fullName", currentUser.getFullName());
+
         return modelAndView;
     }
 
@@ -91,6 +105,8 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.findUserByEmail(auth.getName());
         modelAndView.addObject("currentUser", currentUser);
+        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
+        modelAndView.addObject("fullName", currentUser.getFullName());
 
         modelAndView.setViewName("user/editUser");
         modelAndView.addObject("user", user);
@@ -113,14 +129,16 @@ public class UserController {
                 userUpdate.setPassword("$2a$10$KXcCwpQzwA6DRY0e2Du2duju7b7hxDBljYi9tGwiLUFT0DeLnecQu");
             }
         userService.editUser(userUpdate);
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User userAuth = userService.findUserByEmail(auth.getName());
+        User currentUser = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", currentUser);
+        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
+        modelAndView.addObject("fullName", currentUser.getFullName());
+
         List<User> usersList = userService.findUsers();
         modelAndView.addObject("usersList", usersList);
-        modelAndView.addObject("currentUser", userAuth);
-        modelAndView.addObject("currentUserRoles", userAuth.getRoles());
-        modelAndView.addObject("fullName", userAuth.getFullName());
-        modelAndView.addObject("message", "สำเร็จ");
+        modelAndView.addObject("message", "ดำเนินการสำเร็จ");
         modelAndView.setViewName("user/listUser");
         return modelAndView;
     }
@@ -137,10 +155,10 @@ public class UserController {
         if((bCryptPasswordEncoder.matches(password,userUpdate.getPassword())) && (newPassword.equals(confirmPassword))){
             userUpdate.setPassword(bCryptPasswordEncoder.encode(newPassword));
             userService.editUser(userUpdate);
-            modelAndView.addObject("message", "สำเร็จ");
+            modelAndView.addObject("message", "ดำเนินการสำเร็จ");
 
         }else {
-            modelAndView.addObject("messageError", "ไม่สำเร็จสำเร็จ");
+            modelAndView.addObject("messageError", "ดำเนินการไม่สำเร็จ");
         }
 
         User user = userRepository.findByEmail(email);
@@ -150,6 +168,8 @@ public class UserController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.findUserByEmail(auth.getName());
         modelAndView.addObject("currentUser", currentUser);
+        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
+        modelAndView.addObject("fullName", currentUser.getFullName());
 
         return modelAndView;
     }

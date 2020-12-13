@@ -6,6 +6,7 @@ import com.lottomatching.domain.User;
 import com.lottomatching.service.CustomUserDetailsService;
 import com.lottomatching.service.LottoService;
 import com.lottomatching.service.NewsService;
+import com.lottomatching.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,10 +32,14 @@ public class LottoController {
     @RequestMapping(value = "/user/lotto", method = RequestMethod.GET)
     public ModelAndView lottoList() {
         ModelAndView modelAndView = new ModelAndView();
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", user);
-        List<Lotto> lottos = lottoService.findByUserOrderByIdDesc(user);
+        User currentUser = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", currentUser);
+        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
+        modelAndView.addObject("fullName", currentUser.getFullName());
+
+        List<Lotto> lottos = lottoService.findByUserOrderByIdDesc(currentUser);
         modelAndView.addObject("lottos", lottos);
         modelAndView.setViewName("lotto/list");
         return modelAndView;
@@ -59,24 +64,29 @@ public class LottoController {
 
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", user);
-
-        List<String> barcodeList = Arrays.asList(barcode.split("\\r?\\n"));
+        User currentUser = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", currentUser);
+        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
+        modelAndView.addObject("fullName", currentUser.getFullName());
         int sendCount = 0;
-        for(String b : barcodeList){
-            Lotto lotto = new Lotto();
-            lotto.setBarcode(b);
-            lotto.setRound(b.substring(2,4));
-            lotto.setGroup(b.substring(4,6));
-            lotto.setNumber(b.substring(6,10));
-            lotto.setDate(new Date());
-            lotto.setEnabled(true);
-            lotto.setUser(user);
-            sendCount = sendCount+ lottoService.save(lotto);
-        }
+        try {
+            List<String> barcodeList = Arrays.asList(barcode.split("\\r?\\n"));
 
-        List<Lotto> lottos = lottoService.findByUserOrderByIdDesc(user);
+            for(String b : barcodeList){
+                Lotto lotto = new Lotto();
+                lotto.setBarcode(b);
+                lotto.setRound(b.substring(2,4));
+                lotto.setGroup(b.substring(4,6));
+                lotto.setNumber(b.substring(6,10));
+                lotto.setDate(new Date());
+                lotto.setEnabled(true);
+                lotto.setUser(currentUser);
+                sendCount = sendCount+ lottoService.save(lotto);
+            }
+        } catch (Exception e){
+            modelAndView.addObject("messageError", "ดำเนินการไม่สำเร็จ กรุณาลองไหม่");
+        }
+        List<Lotto> lottos = lottoService.findByUserOrderByIdDesc(currentUser);
         modelAndView.addObject("message", "จำนวนที่ส่งได้: "+sendCount);
         modelAndView.addObject("lottos", lottos);
         modelAndView.setViewName("lotto/list");

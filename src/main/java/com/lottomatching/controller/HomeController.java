@@ -38,14 +38,22 @@ public class HomeController {
     @Autowired
     private NewsService newsService;
 
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView login() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("home");
+        return modelAndView;
+    }
+
    @RequestMapping(value = "/admin/dashboard", method = RequestMethod.GET)
     public ModelAndView adminDashboard() {
         ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", user);
-        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(user.getRoles()));
-        modelAndView.addObject("fullName", user.getFullName());
+
+       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+       User currentUser = userService.findUserByEmail(auth.getName());
+       modelAndView.addObject("currentUser", currentUser);
+       modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
+       modelAndView.addObject("fullName", currentUser.getFullName());
         modelAndView.setViewName("admin/dashboard");
         return modelAndView;
     }
@@ -54,11 +62,13 @@ public class HomeController {
     @RequestMapping(value = "/user/dashboard", method = RequestMethod.GET)
     public ModelAndView userDashboard() {
         ModelAndView modelAndView = new ModelAndView();
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", user);
-        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(user.getRoles()));
-        modelAndView.addObject("fullName", user.getFullName());
+        User currentUser = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", currentUser);
+        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
+        modelAndView.addObject("fullName", currentUser.getFullName());
+
         modelAndView.addObject("news", newsService.findNewsById(new Long(1)).getMsg());
         modelAndView.setViewName("dashboard");
         return modelAndView;
@@ -84,6 +94,8 @@ public class HomeController {
 }
 
 
-//    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//    User user = userService.findUserByEmail(auth.getName());
-//    modelAndView.addObject("currentUser", user);
+//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//User currentUser = userService.findUserByEmail(auth.getName());
+//modelAndView.addObject("currentUser", currentUser);
+//modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
+//modelAndView.addObject("fullName", currentUser.getFullName());
