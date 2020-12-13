@@ -16,8 +16,8 @@ public class LottoService {
     @Autowired
     private LottoRepository lottoRepository;
 
-    public List<Lotto> findByUser(User user){
-        return lottoRepository.findByUser(user);
+    public List<Lotto> findByUserOrderByIdDesc(User user){
+        return lottoRepository.findByUserOrderByIdDesc(user);
     }
 
     public Lotto findByBarcode(String barcode){

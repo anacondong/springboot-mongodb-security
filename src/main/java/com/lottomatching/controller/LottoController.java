@@ -34,7 +34,7 @@ public class LottoController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         modelAndView.addObject("currentUser", user);
-        List<Lotto> lottos = lottoService.findByUser(user);
+        List<Lotto> lottos = lottoService.findByUserOrderByIdDesc(user);
         modelAndView.addObject("lottos", lottos);
         modelAndView.setViewName("lotto/list");
         return modelAndView;
@@ -76,7 +76,7 @@ public class LottoController {
             sendCount = sendCount+ lottoService.save(lotto);
         }
 
-        List<Lotto> lottos = lottoService.findByUser(user);
+        List<Lotto> lottos = lottoService.findByUserOrderByIdDesc(user);
         modelAndView.addObject("message", "จำนวนที่ส่งได้: "+sendCount);
         modelAndView.addObject("lottos", lottos);
         modelAndView.setViewName("lotto/list");

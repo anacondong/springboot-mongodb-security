@@ -8,6 +8,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface LottoRepository extends MongoRepository<Lotto, Long> {
-    List<Lotto> findByUser(User user);
+    List<Lotto> findByUserOrderByIdDesc(User user);
     Lotto findByBarcode(String barcode);
 }
