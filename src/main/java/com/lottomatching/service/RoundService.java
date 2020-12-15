@@ -1,5 +1,6 @@
 package com.lottomatching.service;
 
+import com.lottomatching.domain.Lotto;
 import com.lottomatching.domain.News;
 import com.lottomatching.domain.Round;
 import com.lottomatching.repository.NewsRepository;
@@ -18,4 +19,18 @@ public class RoundService {
     public List<Round> findAll() {
         return roundRepository.findAll();
     }
+
+    public Round findByNumber(String number) {
+        return roundRepository.findByNumber(number);
+    }
+
+    public boolean save(Round round) {
+        try {
+            roundRepository.save(round);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
 }

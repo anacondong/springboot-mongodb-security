@@ -76,7 +76,6 @@ public class SpringBootMongodbSecurityApplication {
             if (roundList.isEmpty()) {
                 for (long i = 0; i < 100; i++) {
                     Round r = new Round();
-                    r.setId(i);
                     r.setNumber(df.format(i));
                     r.setEnabled(false);
                     if ((i % 2) == 0) {

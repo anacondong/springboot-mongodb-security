@@ -1,5 +1,6 @@
 package com.lottomatching.domain;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -8,17 +9,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "round")
 public class Round {
     @Id
-    private long id;
+    private ObjectId _id;
+
+    @Indexed(unique = true)
     private String number;
     private String name;
     private boolean enabled;
 
-    public long getId() {
-        return id;
+    public ObjectId get_id() {
+        return _id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void set_id(ObjectId _id) {
+        this._id = _id;
     }
 
     public String getNumber() {

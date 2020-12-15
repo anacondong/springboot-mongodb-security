@@ -13,7 +13,7 @@
         messageError
     </div>
     <div>
-        ตาราง round
+        ตารางงวด
         <div class="text-right">จำนวนทั้งหมด: <b th:text="${#lists.size(roundList)}">[roundList]</b></div>
 
         <table class="table table-hover">
@@ -21,7 +21,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">งวดที่</th>
-                <th scope="col">ชื่อ</th>
+                <th scope="col">ชื่องวด</th>
                 <th scope="col">สถานะ</th>
                 <th scope="col">จัดการ</th>
             </tr>
@@ -29,14 +29,14 @@
 
             <tr th:each="round : ${roundList}">
                 <th scope="row" th:text="${roundStat.index+1}">#</th>
-                <td th:text="${round.number}">barcode</td>
-                <td th:text="${round.name}">number</td>
+                <td th:text="${round.number}">number</td>
+                <td th:text="${round.name}">name</td>
                 <td>
                     <button th:if="${round.enabled == true}" type="button" class="btn btn-success">เปิด</button>
                     <button th:if="${round.enabled == false}" type="button" class="btn btn-danger">ปิด</button>
                 </td>
                 <td>
-                    <a class="btn btn-link" href="#">แก้ไข</a>
+                    <a class="btn btn-link" th:href="@{/admin/editRound/{number}(number=${round.number})}">แก้ไข</a>
                 </td>
             </tr>
         </table>

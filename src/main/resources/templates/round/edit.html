@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+<head>
+    <title>หน้าหลัก Admin</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="alert alert-success" role="alert" th:text="${message}" th:if="${message != null}">
+        message
+    </div>
+    <div class="alert alert-danger" role="alert" th:text="${messageError}" th:if="${messageError != null}">
+        messageError
+    </div>
+    <form th:action="@{/admin/editRound}" method="post" class="form-signin">
+        <h1 class="h3 mb-3 font-weight-normal">แก้ไขข้อมูล งวด</h1>
+        <label>งวดที่</label>
+        <input type="hidden" name="number" th:value="${round.number}">
+        <input type="text" class="form-control" placeholder="'งวดที่'"
+               th:value="${round.number}" disabled />
+        <label>ชื่องวด</label>
+        <input type="text" name="name" class="form-control" placeholder="ชื่องวด" required="ชื่องวด"
+               th:value="${round.name}"/>
+
+        <label>สถานะ</label>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="status" id="r1" value="true" th:checked="${round.enabled} == true" >
+            <label class="form-check-label" for="r1">
+                เปิดระบบ
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="status" id="r2" value="false" th:checked="${round.enabled} == false">
+            <label class="form-check-label" for="r2">
+                ปิดระบบ
+            </label>
+        </div>
+
+        <br/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">บันทึก</button>
+    </form>
+
+</div>
+
+
+</body>
+</html>
