@@ -70,6 +70,11 @@ public class RoundController {
 
         round.setName(name);
         round.setStatus(status);
+
+        // todo if status = close Find lotto getRound = round name and set enable = 0
+        // todo if status = open Find lotto getRound = round name and set enable = 1
+        // todo lotto list get only lotto enable 1
+
         boolean result = roundService.save(round);
         if(result){
             modelAndView.addObject("message", "ดำเนินการสำเร็จ");
