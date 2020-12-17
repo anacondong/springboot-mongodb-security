@@ -23,14 +23,23 @@
                th:value="${round.name}"/>
 
         <label>สถานะ</label>
+
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="status" id="r1" value="true" th:checked="${round.enabled} == true" >
+            <input class="form-check-input" type="radio" name="status" id="r1" value="open" th:checked="${round.status} == 'open'">
             <label class="form-check-label" for="r1">
                 เปิดระบบ
             </label>
         </div>
+
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="status" id="r2" value="false" th:checked="${round.enabled} == false">
+            <input class="form-check-input" type="radio" name="status" id="r3" value="process" th:checked="${round.status} == 'process'" >
+            <label class="form-check-label" for="r3">
+                ประมวลผล
+            </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="status" id="r2" value="close" th:checked="${round.status} == 'close'">
             <label class="form-check-label" for="r2">
                 ปิดระบบ
             </label>

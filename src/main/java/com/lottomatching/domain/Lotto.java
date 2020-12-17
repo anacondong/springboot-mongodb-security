@@ -106,4 +106,20 @@ public class Lotto {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
+    @Override
+    public String toString() {
+        return "Lotto{" +
+                "id='" + id + '\'' +
+                ", barcode='" + barcode + '\'' +
+                ", number='" + number + '\'' +
+                ", group='" + group + '\'' +
+                ", round='" + round + '\'' +
+                ", date=" + date +
+                ", match=" + match +
+                ", matchType='" + matchType + '\'' +
+                ", enabled=" + enabled +
+                ", user=" + user +
+                '}';
+    }
 }

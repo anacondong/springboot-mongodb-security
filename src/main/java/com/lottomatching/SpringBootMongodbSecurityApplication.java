@@ -77,7 +77,7 @@ public class SpringBootMongodbSecurityApplication {
                 for (long i = 0; i < 100; i++) {
                     Round r = new Round();
                     r.setNumber(df.format(i));
-                    r.setEnabled(false);
+                    r.setStatus("close");
                     if ((i % 2) == 0) {
                         r.setName(r.getNumber() + " : โค้วต้า");
                     } else {

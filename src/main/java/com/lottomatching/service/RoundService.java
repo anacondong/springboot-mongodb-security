@@ -33,4 +33,8 @@ public class RoundService {
         }
     }
 
+    public List<Round> findByStatus(String status) {
+        return roundRepository.findByStatus(status);
+    }
+
 }

@@ -14,7 +14,7 @@ public class Round {
     @Indexed(unique = true)
     private String number;
     private String name;
-    private boolean enabled;
+    private String status;
 
     public ObjectId get_id() {
         return _id;
@@ -40,11 +40,21 @@ public class Round {
         this.name = name;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public String getStatus() {
+        return status;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Round{" +
+                "_id=" + _id +
+                ", number='" + number + '\'' +
+                ", name='" + name + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

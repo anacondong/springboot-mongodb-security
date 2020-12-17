@@ -6,6 +6,14 @@
 </head>
 <body>
 <div layout:fragment="content">
+    ตาราง lotto
+    <div class="alert alert-primary" role="alert">
+        งวดที่ เปิดระบบ:
+        <span th:each="rd : ${roundList}">
+            <button type="button" class="btn btn btn-warning" th:text="${rd.number}">number</button>&nbsp;&nbsp;
+        </span>
+    </div>
+
     <div class="alert alert-success" role="alert" th:text="${message}" th:if="${message != null}">
         message
     </div>
@@ -13,8 +21,6 @@
         messageError
     </div>
     <div>
-        ตาราง lotto
-
         <form class="text-center" th:action="@{/user/lotto/add}" method="post">
             <textarea class="form-control" name="barcode" rows="8" placeholder="กรอกบาร์โค้ดที่นี้"></textarea>
             <br/>

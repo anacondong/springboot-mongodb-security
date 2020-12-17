@@ -69,13 +69,7 @@ public class RoundController {
         ModelAndView modelAndView = new ModelAndView();
 
         round.setName(name);
-        if("true".equals(status)){
-            round.setEnabled(true);
-            // todo lotto all in this round update to be enable
-        }else{
-            round.setEnabled(false);
-            // todo lotto all in this round update to be disable
-        }
+        round.setStatus(status);
         boolean result = roundService.save(round);
         if(result){
             modelAndView.addObject("message", "ดำเนินการสำเร็จ");

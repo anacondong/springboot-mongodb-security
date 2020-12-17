@@ -2,6 +2,7 @@ package com.lottomatching.service;
 
 import com.lottomatching.domain.Lotto;
 import com.lottomatching.domain.News;
+import com.lottomatching.domain.Round;
 import com.lottomatching.domain.User;
 import com.lottomatching.repository.LottoRepository;
 import com.lottomatching.repository.NewsRepository;
@@ -32,5 +33,10 @@ public class LottoService {
             return 0;
         }
     }
+
+    public List<Lotto> findByUserAndRoundOrderByIdDesc(User user, String roundNumber) {
+        return lottoRepository.findByUserAndRoundOrderByIdDesc(user, roundNumber);
+    }
+
 
 }
