@@ -25,6 +25,10 @@ public class LottoService {
         return lottoRepository.findByBarcode(barcode);
     }
 
+    public List<Lotto> findByRound(String roundNumber) {
+        return lottoRepository.findByRound(roundNumber);
+    }
+
     public int save(Lotto lotto) {
         try {
             lottoRepository.save(lotto);
@@ -34,8 +38,25 @@ public class LottoService {
         }
     }
 
+    public int saveAll(List<Lotto> lottoList) {
+        int count = 0;
+        for(Lotto lotto: lottoList){
+            try {
+                lottoRepository.save(lotto);
+                count++;
+            } catch (Exception e) {
+
+            }
+        }
+        return count;
+    }
+
     public List<Lotto> findByUserAndRoundOrderByIdDesc(User user, String roundNumber) {
         return lottoRepository.findByUserAndRoundOrderByIdDesc(user, roundNumber);
+    }
+
+    public List<Lotto> findByUserAndRoundAndEnabledOrderByIdDesc(User user, String roundNumber,boolean enable) {
+        return lottoRepository.findByUserAndRoundAndEnabledOrderByIdDesc(user, roundNumber, enable);
     }
 
 

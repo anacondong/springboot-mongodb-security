@@ -11,7 +11,7 @@ import java.util.List;
 public interface LottoRepository extends MongoRepository<Lotto, Long> {
     List<Lotto> findByUserOrderByIdDesc(User user);
     List<Lotto> findByUserAndRoundOrderByIdDesc(User user, String roundNumber);
-
-
+    List<Lotto> findByUserAndRoundAndEnabledOrderByIdDesc(User user, String roundNumber,boolean enabled);
     Lotto findByBarcode(String barcode);
+    List<Lotto> findByRound(String roundNumber);
 }

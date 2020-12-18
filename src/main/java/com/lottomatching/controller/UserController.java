@@ -37,11 +37,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         List<User> usersList = userService.findUsers();
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", currentUser);
-        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
-        modelAndView.addObject("fullName", currentUser.getFullName());
+        Utils.setCurrentUser(userService, modelAndView);
 
         modelAndView.addObject("usersList", usersList);
         modelAndView.setViewName("user/listUser");
@@ -52,11 +48,7 @@ public class UserController {
     public ModelAndView addUser() {
         ModelAndView modelAndView = new ModelAndView();
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", currentUser);
-        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
-        modelAndView.addObject("fullName", currentUser.getFullName());
+        Utils.setCurrentUser(userService, modelAndView);
 
 
         User us = new User();
@@ -88,11 +80,7 @@ public class UserController {
 
         }
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", currentUser);
-        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
-        modelAndView.addObject("fullName", currentUser.getFullName());
+        Utils.setCurrentUser(userService, modelAndView);
 
         return modelAndView;
     }
@@ -102,11 +90,7 @@ public class UserController {
         User user = userRepository.findByEmail(email);
         ModelAndView modelAndView = new ModelAndView();
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", currentUser);
-        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
-        modelAndView.addObject("fullName", currentUser.getFullName());
+        Utils.setCurrentUser(userService, modelAndView);
 
         modelAndView.setViewName("user/editUser");
         modelAndView.addObject("user", user);
@@ -130,11 +114,7 @@ public class UserController {
         }
         userService.editUser(userUpdate);
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", currentUser);
-        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
-        modelAndView.addObject("fullName", currentUser.getFullName());
+        Utils.setCurrentUser(userService, modelAndView);
 
         List<User> usersList = userService.findUsers();
         modelAndView.addObject("usersList", usersList);
@@ -164,11 +144,7 @@ public class UserController {
         modelAndView.setViewName("changePassword");
         modelAndView.addObject("user", user);
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", currentUser);
-        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
-        modelAndView.addObject("fullName", currentUser.getFullName());
+        Utils.setCurrentUser(userService, modelAndView);
 
         return modelAndView;
     }

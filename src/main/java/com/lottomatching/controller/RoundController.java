@@ -1,10 +1,12 @@
 package com.lottomatching.controller;
 
 
+import com.lottomatching.domain.Lotto;
 import com.lottomatching.domain.News;
 import com.lottomatching.domain.Round;
 import com.lottomatching.domain.User;
 import com.lottomatching.service.CustomUserDetailsService;
+import com.lottomatching.service.LottoService;
 import com.lottomatching.service.NewsService;
 import com.lottomatching.service.RoundService;
 import com.lottomatching.utils.Utils;
@@ -29,16 +31,15 @@ public class RoundController {
     @Autowired
     private CustomUserDetailsService userService;
 
+    @Autowired
+    private LottoService lottoService;
+
     @RequestMapping(value = "/admin/round", method = RequestMethod.GET)
     public ModelAndView roundHome() {
         List<Round> roundList = roundService.findAll();
         ModelAndView modelAndView = new ModelAndView();
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", currentUser);
-        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
-        modelAndView.addObject("fullName", currentUser.getFullName());
+        Utils.setCurrentUser(userService, modelAndView);
 
         modelAndView.addObject("roundList", roundList);
         modelAndView.setViewName("round/list");
@@ -50,11 +51,7 @@ public class RoundController {
         Round round = roundService.findByNumber(number);
         ModelAndView modelAndView = new ModelAndView();
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", currentUser);
-        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
-        modelAndView.addObject("fullName", currentUser.getFullName());
+        Utils.setCurrentUser(userService, modelAndView);
 
         modelAndView.addObject("round", round);
         modelAndView.setViewName("round/edit");
@@ -71,8 +68,25 @@ public class RoundController {
         round.setName(name);
         round.setStatus(status);
 
-        // todo if status = close Find lotto getRound = round name and set enable = 0
-        // todo if status = open Find lotto getRound = round name and set enable = 1
+        List<Lotto> lottoList = lottoService.findByRound(number);
+        if(status.equals("open")){
+            // todo if status = open Find lotto getRound = round name and set enable = 1
+            lottoList.stream().forEach(lotto -> lotto.setEnabled(true));
+            int count = lottoService.saveAll(lottoList);
+            System.out.println("Updated lotto status:"+count);
+        }
+
+        if(status.equals("close")){
+            // todo if status = close Find lotto getRound = round name and set enable = 0
+            lottoList.stream().forEach(lotto -> lotto.setEnabled(false));
+            int count = lottoService.saveAll(lottoList);
+            System.out.println("Updated lotto status:"+count);
+        }
+
+        if(status.equals("process")){
+            // todo not sure for this event
+        }
+
         // todo lotto list get only lotto enable 1
 
         boolean result = roundService.save(round);
@@ -84,11 +98,8 @@ public class RoundController {
 
         round = roundService.findByNumber(number);
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", currentUser);
-        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
-        modelAndView.addObject("fullName", currentUser.getFullName());
+        Utils.setCurrentUser(userService, modelAndView);
+
         modelAndView.addObject("round", round);
         modelAndView.setViewName("round/edit");
         return modelAndView;

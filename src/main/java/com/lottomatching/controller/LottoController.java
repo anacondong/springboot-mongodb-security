@@ -39,16 +39,13 @@ public class LottoController {
     public ModelAndView lottoList() {
         ModelAndView modelAndView = new ModelAndView();
 
+        Utils.setCurrentUser(userService, modelAndView);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", currentUser);
-        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
-        modelAndView.addObject("fullName", currentUser.getFullName());
-
         List<Round> roundList = roundService.findByStatus("open");
         List<Lotto> lottos = new ArrayList<Lotto>();
         for(Round round: roundList){
-            lottos.addAll(lottoService.findByUserAndRoundOrderByIdDesc(currentUser,round.getNumber()));
+            lottos.addAll(lottoService.findByUserAndRoundAndEnabledOrderByIdDesc(currentUser,round.getNumber(), true));
         }
 
         modelAndView.addObject("lottos", lottos);
@@ -61,12 +58,9 @@ public class LottoController {
     public ModelAndView lottoAdd(@RequestParam("barcode") String barcode) {
 
         ModelAndView modelAndView = new ModelAndView();
+        Utils.setCurrentUser(userService, modelAndView);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", currentUser);
-        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
-        modelAndView.addObject("fullName", currentUser.getFullName());
-
         List<Round> roundList = roundService.findByStatus("open");
 
         int sendCount = 0;

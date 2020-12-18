@@ -50,11 +50,7 @@ public class HomeController {
     public ModelAndView adminDashboard() {
         ModelAndView modelAndView = new ModelAndView();
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", currentUser);
-        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
-        modelAndView.addObject("fullName", currentUser.getFullName());
+        Utils.setCurrentUser(userService, modelAndView);
         modelAndView.setViewName("admin/dashboard");
         return modelAndView;
     }
@@ -64,11 +60,7 @@ public class HomeController {
     public ModelAndView userDashboard() {
         ModelAndView modelAndView = new ModelAndView();
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", currentUser);
-        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
-        modelAndView.addObject("fullName", currentUser.getFullName());
+        Utils.setCurrentUser(userService, modelAndView);
 
         modelAndView.addObject("news", newsService.findNewsById(new Long(1)).getMsg());
         modelAndView.setViewName("dashboard");
@@ -91,12 +83,4 @@ public class HomeController {
         return modelAndView;
     }
 
-
 }
-
-
-//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//User currentUser = userService.findUserByEmail(auth.getName());
-//modelAndView.addObject("currentUser", currentUser);
-//modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
-//modelAndView.addObject("fullName", currentUser.getFullName());

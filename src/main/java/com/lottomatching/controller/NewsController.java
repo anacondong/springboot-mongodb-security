@@ -29,11 +29,7 @@ public class NewsController {
         News news = NewsService.findNewsById(new Long(1));
         ModelAndView modelAndView = new ModelAndView();
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", currentUser);
-        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
-        modelAndView.addObject("fullName", currentUser.getFullName());
+        Utils.setCurrentUser(userService, modelAndView);
 
         modelAndView.addObject("news", news);
         modelAndView.setViewName("admin/adminNews");
@@ -47,11 +43,7 @@ public class NewsController {
         NewsService.save(news);
         ModelAndView modelAndView = new ModelAndView();
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", currentUser);
-        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
-        modelAndView.addObject("fullName", currentUser.getFullName());
+        Utils.setCurrentUser(userService, modelAndView);
 
         modelAndView.addObject("news", news);
         modelAndView.addObject("message", "สำเร็จ");

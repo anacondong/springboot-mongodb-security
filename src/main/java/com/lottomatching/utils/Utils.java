@@ -20,4 +20,12 @@ public class Utils {
         return (role.isEmpty()) ? "USER" : "ADMIN";
     }
 
+    public static void setCurrentUser(CustomUserDetailsService userService, ModelAndView modelAndView) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", currentUser);
+        modelAndView.addObject("currentUserRoles", Utils.getCurrentUserRole(currentUser.getRoles()));
+        modelAndView.addObject("fullName", currentUser.getFullName());
+
+    }
 }
