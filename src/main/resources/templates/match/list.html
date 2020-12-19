@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+<head>
+    <title>หน้าหลัก Admin</title>
+</head>
+<body>
+<div layout:fragment="content">
+    ตาราง lotto
+    <div class="alert alert-primary" role="alert">
+        งวดที่ เปิดชนเลข:
+        <span th:each="rd : ${roundList}">
+            <button type="button" class="btn btn btn-warning" th:text="${rd.number}">number</button>&nbsp;&nbsp;
+        </span>
+    </div>
+
+    <div>
+        <div class="text-right">จำนวนทั้งหมดที่ชนได้: <b th:text="${#lists.size(lottos)}">[usersList]</b></div>
+        <table class="table table-hover">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">00</th>
+                <th scope="col">01</th>
+                <th scope="col">02</th>
+                <th scope="col">03</th>
+                <th scope="col">04</th>
+                <th scope="col">05</th>
+                <th scope="col">06</th>
+                <th scope="col">07</th>
+                <th scope="col">08</th>
+                <th scope="col">09</th>
+            </tr>
+            </thead>
+
+            <tr th:each="lotto : ${lottos}">
+                <td>00</td>
+                <td>01</td>
+                <td>02</td>
+                <td>03</td>
+                <td>04</td>
+                <td>05</td>
+                <td>06</td>
+                <td>07</td>
+                <td>08</td>
+                <td>09</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+
+</body>
+</html>

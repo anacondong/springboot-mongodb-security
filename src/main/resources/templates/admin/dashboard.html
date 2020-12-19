@@ -6,8 +6,6 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <h1 th:inline="text">สวัสดี [[${#httpServletRequest.remoteUser}]]!</h1>
-    <h2>นี้คือ dashboard</h2>
     <div class="alert alert-success" role="alert" th:text="${message}" th:if="${message != null}">
         message
     </div>

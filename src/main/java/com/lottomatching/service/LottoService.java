@@ -59,5 +59,9 @@ public class LottoService {
         return lottoRepository.findByUserAndRoundAndEnabledOrderByIdDesc(user, roundNumber, enable);
     }
 
+    public List<Lotto> findByRoundAndEnabledOrderByIdDesc(String roundNumber, boolean enabled) {
+        return lottoRepository.findByRoundAndEnabledOrderByIdDesc(roundNumber, enabled);
+    }
+
 
 }

@@ -1,7 +1,5 @@
 
-=IF(MID(A1,1,1)="1",MID(A1,7,4),MID(A1,10,4))
-=IF(MID(C1,1,1)="1",MID(C1,7,4),MID(C1,10,4))
-=IF(MID(E1,1,1)="1",MID(E1,7,4),MID(E1,10,4))
+// todo start match table and get results display
 
 
 1933024820482050

@@ -92,7 +92,12 @@ public class LottoController {
         } catch (Exception e) {
             modelAndView.addObject("messageError", "ดำเนินการไม่สำเร็จ กรุณาลองไหม่");
         }
-        List<Lotto> lottos = lottoService.findByUserOrderByIdDesc(currentUser);
+
+        List<Lotto> lottos = new ArrayList<Lotto>();
+        for(Round round: roundList){
+            lottos.addAll(lottoService.findByUserAndRoundAndEnabledOrderByIdDesc(currentUser,round.getNumber(), true));
+        }
+
         modelAndView.addObject("message", "จำนวนที่ส่งได้: " + sendCount +" จากทั้งหมด: " + count);
         modelAndView.addObject("lottos", lottos);
         modelAndView.addObject("roundList", roundList);

@@ -70,14 +70,12 @@ public class RoundController {
 
         List<Lotto> lottoList = lottoService.findByRound(number);
         if(status.equals("open")){
-            // todo if status = open Find lotto getRound = round name and set enable = 1
             lottoList.stream().forEach(lotto -> lotto.setEnabled(true));
             int count = lottoService.saveAll(lottoList);
             System.out.println("Updated lotto status:"+count);
         }
 
         if(status.equals("close")){
-            // todo if status = close Find lotto getRound = round name and set enable = 0
             lottoList.stream().forEach(lotto -> lotto.setEnabled(false));
             int count = lottoService.saveAll(lottoList);
             System.out.println("Updated lotto status:"+count);
@@ -86,8 +84,6 @@ public class RoundController {
         if(status.equals("process")){
             // todo not sure for this event
         }
-
-        // todo lotto list get only lotto enable 1
 
         boolean result = roundService.save(round);
         if(result){
