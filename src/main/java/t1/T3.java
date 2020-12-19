@@ -1,10 +1,13 @@
 package t1;
 
 import com.lottomatching.domain.Lotto;
+import com.lottomatching.utils.Utils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class T3 {
 
@@ -25,31 +28,41 @@ public class T3 {
             l.setRound(roundDf.format((Math.random() * 10) + 1));
             lottosAll.add(l);
         }
-        lottosAll.stream().forEach(l -> System.out.println("<<< lottosAllMatch >>> barcode: "+l.getBarcode()+" number: "+l.getNumber()+" group: "+l.getGroup()+" round: "+l.getRound()));
+        // lottosAll.stream().forEach(l -> System.out.println("<<< lottosAllMatch >>> barcode: "+l.getBarcode()+" number: "+l.getNumber()+" group: "+l.getGroup()+" round: "+l.getRound()));
 
         // random user lotto list
         List<Lotto> userLotto = new ArrayList<Lotto>();
-        for(int i =0; i <= 10 ; i++){
+        for(int i =1; i <= 10 ; i++){
             userLotto.add(lottosAll.get(i));
         }
-        userLotto.stream().forEach(l -> System.out.println("<<< lottos >>> barcode: "+l.getBarcode()+" number: "+l.getNumber()+" group: "+l.getGroup()+" round: "+l.getRound()));
+        // userLotto.stream().forEach(l -> System.out.println("<<< lottos >>> barcode: "+l.getBarcode()+" number: "+l.getNumber()+" group: "+l.getGroup()+" round: "+l.getRound()));
 
         // same round >> same lotto number, 1-5 group
+        Map groupMap = Utils.getGroupMap(new HashMap());
         List<Lotto> matched = new ArrayList<Lotto>();
+        int count = 1;
         for(Lotto ul: userLotto){
             for(Lotto am: userLotto){
                 if(ul.getRound().equals(am.getRound())){ // round
                     if(ul.getNumber().equals(am.getNumber())){ // number
-                            // todo group 1-5
+                        if(groupMap.get(ul.getGroup()).equals(groupMap.get(am.getGroup()))){
+                            System.out.println("====="+count+"=====");
+                            System.out.println("User: "+ul.toString());
+                            System.out.println("Admin: "+am.toString());
+                            count++;
+                        }
                     }
                 }
             }
 
         }
-
-
     }
+
+
 }
+
+
+
 
 
 //        <<< lottos >>> barcode: 1933265490549050 number: 5490 group: 26 round: 33
