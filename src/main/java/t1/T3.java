@@ -20,12 +20,12 @@ public class T3 {
 
         //random all match
         List<Lotto> lottosAll = new ArrayList<Lotto>();
-        for(int i =0; i <= 1000 ; i++){
+        for(int i =0; i <= 10000; i++){
             Lotto l = new Lotto ();
             l.setBarcode(barcodeDf.format(i));
-            l.setNumber(numberDf.format((Math.random() * 100) + 1));
-            l.setGroup(groupDf.format((Math.random() * 10) + 1));
-            l.setRound(roundDf.format((Math.random() * 10) + 1));
+            l.setNumber(numberDf.format((Math.random() * 1000) + 1));
+            l.setGroup(groupDf.format((Math.random() * 100) + 1));
+            l.setRound("35");
             lottosAll.add(l);
         }
         // lottosAll.stream().forEach(l -> System.out.println("<<< lottosAllMatch >>> barcode: "+l.getBarcode()+" number: "+l.getNumber()+" group: "+l.getGroup()+" round: "+l.getRound()));
@@ -33,28 +33,30 @@ public class T3 {
         // random user lotto list
         List<Lotto> userLotto = new ArrayList<Lotto>();
         for(int i =1; i <= 10 ; i++){
-            userLotto.add(lottosAll.get(i));
+            Lotto l = lottosAll.get(i);
+            l.setNumber(numberDf.format((Math.random() * 1000) + 1));
+            l.setGroup(groupDf.format((Math.random() * 10) + 1));
+            userLotto.add(l);
         }
         // userLotto.stream().forEach(l -> System.out.println("<<< lottos >>> barcode: "+l.getBarcode()+" number: "+l.getNumber()+" group: "+l.getGroup()+" round: "+l.getRound()));
 
         // same round >> same lotto number, 1-5 group
-        Map groupMap = Utils.getGroupMap(new HashMap());
+        Map groupMap = Utils.getGroupMap();
         List<Lotto> matched = new ArrayList<Lotto>();
         int count = 1;
         for(Lotto ul: userLotto){
-            for(Lotto am: userLotto){
+            for(Lotto am: lottosAll){
                 if(ul.getRound().equals(am.getRound())){ // round
                     if(ul.getNumber().equals(am.getNumber())){ // number
                         if(groupMap.get(ul.getGroup()).equals(groupMap.get(am.getGroup()))){
                             System.out.println("====="+count+"=====");
-                            System.out.println("User: "+ul.toString());
-                            System.out.println("Admin: "+am.toString());
+                            System.out.println("User's lotto            : "+ul.toString());
+                            System.out.println("All lotto in the system : "+am.toString());
                             count++;
                         }
                     }
                 }
             }
-
         }
     }
 

@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MatchController {
@@ -40,22 +41,22 @@ public class MatchController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.findUserByEmail(auth.getName());
         List<Round> roundList = roundService.findByStatus("process");
-        List<Lotto> lottos = new ArrayList<Lotto>();
-        List<Lotto> lottosAllMatch = new ArrayList<Lotto>();
+        List<Lotto> userLotto = new ArrayList<Lotto>();
+        List<Lotto> systemLotto = new ArrayList<Lotto>();
         for(Round round: roundList){
-            lottos.addAll(lottoService.findByUserAndRoundAndEnabledOrderByIdDesc(currentUser,round.getNumber(), true)); // user lotto this round
-            lottosAllMatch.addAll(lottoService.findByRoundAndEnabledOrderByIdDesc(round.getNumber(), true)); // all lotto in this round
+            userLotto.addAll(lottoService.findByUserAndRoundAndEnabledOrderByIdDesc(currentUser,round.getNumber(), true)); // user lotto this round
+            systemLotto.addAll(lottoService.findByRoundAndEnabledOrderByIdDesc(round.getNumber(), true)); // all lotto in this round
         }
 
-        lottos.stream().forEach(l -> System.out.println("<<< lottos >>> barcode: "+l.getBarcode()+" number: "+l.getNumber()+" group: "+l.getGroup()+" round: "+l.getRound()));
-        lottosAllMatch.stream().forEach(l -> System.out.println("<<< lottosAllMatch >>> barcode: "+l.getBarcode()+" number: "+l.getNumber()+" group: "+l.getGroup()+" round: "+l.getRound()));
-        // todo matching logic
+//        userLotto.stream().forEach(l -> System.out.println("<<< lottos >>> barcode: "+l.getBarcode()+" number: "+l.getNumber()+" group: "+l.getGroup()+" round: "+l.getRound()));
+//        systemLotto.stream().forEach(l -> System.out.println("<<< lottosAllMatch >>> barcode: "+l.getBarcode()+" number: "+l.getNumber()+" group: "+l.getGroup()+" round: "+l.getRound()));
 
+        List<Lotto> matchedLotto = Utils.getMatchedUserLottoAndSystemLotto(userLotto, systemLotto);
 
-
-        modelAndView.addObject("lottos", lottos);
+        modelAndView.addObject("userLotto", userLotto);
+        modelAndView.addObject("matchedLotto", matchedLotto);
         modelAndView.addObject("roundList", roundList);
-        modelAndView.addObject("lottosAllMatch", lottosAllMatch);
+
         modelAndView.setViewName("match/list");
         return modelAndView;
     }

@@ -1,5 +1,6 @@
 package com.lottomatching.utils;
 
+import com.lottomatching.domain.Lotto;
 import com.lottomatching.domain.Role;
 import com.lottomatching.domain.User;
 import com.lottomatching.service.CustomUserDetailsService;
@@ -7,12 +8,34 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Utils {
+
+    public static List<Lotto> getMatchedUserLottoAndSystemLotto(List<Lotto> userLotto, List<Lotto> systemLotto) {
+
+        // same round >> same lotto number, 1-5 group
+        Map groupMap = Utils.getGroupMap();
+        List<Lotto> matchedLotto = new ArrayList<Lotto>();
+        int count = 1;
+        for(Lotto ul: userLotto){
+            for(Lotto sl: systemLotto){
+                if(ul.getRound().equals(sl.getRound())){ // round
+                    if(ul.getNumber().equals(sl.getNumber())){ // number
+                        if(groupMap.get(ul.getGroup()).equals(groupMap.get(sl.getGroup()))){
+                            System.out.println("====="+count+"=====");
+                            System.out.println("User's lotto            : "+ul.toString());
+                            System.out.println("All lotto in the system : "+sl.toString());
+                            count++;
+                            matchedLotto.add(ul);
+                        }
+                    }
+                }
+            }
+        }
+        return matchedLotto;
+    }
 
     public static String getCurrentUserRole(Set<Role> roles) {
         List<Role> role = roles.stream()
@@ -30,7 +53,9 @@ public class Utils {
 
     }
 
-    public static Map getGroupMap(Map groupMap){
+    public static Map getGroupMap(){
+
+        Map groupMap = new HashMap();
 
         groupMap.put("01","g1");
         groupMap.put("02","g1");

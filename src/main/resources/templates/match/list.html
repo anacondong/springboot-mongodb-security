@@ -6,16 +6,17 @@
 </head>
 <body>
 <div layout:fragment="content">
-    ตาราง lotto
-    <div class="alert alert-primary" role="alert">
+    ตารางเลขชน
+    <div class="alert alert-primary text-right" role="alert">
         งวดที่ เปิดชนเลข:
         <span th:each="rd : ${roundList}">
-            <button type="button" class="btn btn btn-warning" th:text="${rd.number}">number</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn btn-secondary" th:text="${rd.number}">number</button>&nbsp;&nbsp;
         </span>
+        จำนวนที่ส่งเลขได้ทั้งหมด: <button type="button" class="btn btn btn-primary" th:text="${#lists.size(userLotto)}">countUserLotto</button>&nbsp;&nbsp;
+        จำนวนเลขที่ชนสำเร็จ: <button type="button" class="btn btn btn-success" th:text="${#lists.size(matchedLotto)}">matchedLotto</button>&nbsp;&nbsp;
     </div>
 
     <div>
-        <div class="text-right">จำนวนทั้งหมดที่ชนได้: <b th:text="${#lists.size(lottos)}">[usersList]</b></div>
         <table class="table table-hover">
             <thead class="thead-light">
             <tr>
@@ -32,7 +33,7 @@
             </tr>
             </thead>
 
-            <tr th:each="lotto : ${lottos}">
+            <tr th:each="lotto : ${matchedLotto}">
                 <td>00</td>
                 <td>01</td>
                 <td>02</td>
