@@ -72,13 +72,13 @@ public class RoundController {
         if(status.equals("open")){
             lottoList.stream().forEach(lotto -> lotto.setEnabled(true));
             int count = lottoService.saveAll(lottoList);
-            System.out.println("Updated lotto status:"+count);
+//            System.out.println("Updated lotto status:"+count);
         }
 
         if(status.equals("close")){
             lottoList.stream().forEach(lotto -> lotto.setEnabled(false));
             int count = lottoService.saveAll(lottoList);
-            System.out.println("Updated lotto status:"+count);
+//            System.out.println("Updated lotto status:"+count);
         }
 
         if(status.equals("process")){

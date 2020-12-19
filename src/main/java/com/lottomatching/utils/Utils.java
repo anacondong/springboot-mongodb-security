@@ -13,21 +13,38 @@ import java.util.stream.Collectors;
 
 public class Utils {
 
-    public static List<Lotto> getMatchedUserLottoAndSystemLotto(List<Lotto> userLotto, List<Lotto> systemLotto) {
 
-        // same round >> same lotto number, 1-5 group
+    public static List<Lotto> getMatchedUserLottoAndUserLotto(List<Lotto> userLotto) {
+
+        // 1) barcode not the same >>> 2) same round >> 3)same lotto number, 4)1-5 group length
         Map groupMap = Utils.getGroupMap();
         List<Lotto> matchedLotto = new ArrayList<Lotto>();
-        int count = 1;
+        for(Lotto ul: userLotto){
+            for(Lotto ul2: userLotto){
+                if(!(ul.getBarcode().equals(ul2.getBarcode()))){ // barcode
+                    if(ul.getRound().equals(ul2.getRound())){ // round
+                        if(ul.getNumber().equals(ul2.getNumber())){ // number
+                            if(groupMap.get(ul.getGroup()).equals(groupMap.get(ul2.getGroup()))){
+                                matchedLotto.add(ul);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return matchedLotto;
+    }
+
+    public static List<Lotto> getMatchedUserLottoAndSystemLotto(List<Lotto> userLotto, List<Lotto> systemLotto) {
+
+        // 1) same round >> 2) same lotto number, 3) 1-5 group
+        Map groupMap = Utils.getGroupMap();
+        List<Lotto> matchedLotto = new ArrayList<Lotto>();
         for(Lotto ul: userLotto){
             for(Lotto sl: systemLotto){
                 if(ul.getRound().equals(sl.getRound())){ // round
                     if(ul.getNumber().equals(sl.getNumber())){ // number
                         if(groupMap.get(ul.getGroup()).equals(groupMap.get(sl.getGroup()))){
-                            System.out.println("====="+count+"=====");
-                            System.out.println("User's lotto            : "+ul.toString());
-                            System.out.println("All lotto in the system : "+sl.toString());
-                            count++;
                             matchedLotto.add(ul);
                         }
                     }
