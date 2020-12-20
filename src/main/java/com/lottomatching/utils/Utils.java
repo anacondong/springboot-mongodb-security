@@ -11,6 +11,8 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.groupingBy;
+
 public class Utils {
 
     public static List<Lotto> getMatchedUserLottoAndSystemLotto(List<Lotto> userLotto, List<Lotto> systemLotto) {
@@ -32,6 +34,15 @@ public class Utils {
             }
         }
 
+        //remove duplicate barcode
+        Map<String, Lotto> matchedLottoMap = new HashMap<String, Lotto>();
+        for(Lotto l : matchedLotto) {
+            matchedLottoMap.put(l.getBarcode(), l);
+        }
+        matchedLotto.clear();
+        for (Map.Entry<String, Lotto> entry : matchedLottoMap.entrySet()) {
+            matchedLotto.add(entry.getValue());
+        }
         // todo group by barcode
         return matchedLotto;
     }
