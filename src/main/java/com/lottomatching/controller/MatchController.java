@@ -46,26 +46,20 @@ public class MatchController {
         List<Lotto> userLotto = new ArrayList<Lotto>();
         List<Lotto> systemLotto = new ArrayList<Lotto>();
         for(Round round: roundList){
-            userLotto.addAll(lottoService.findByUserAndRoundAndEnabledOrderByIdDesc(currentUser,round.getNumber(), true)); // user lotto this round
-            List<Lotto> systemLottoWithOutCurrentUser =lottoService.findByRoundAndEnabledOrderByIdDesc(round.getNumber(), true); // System lotto with Current user
+            userLotto.addAll(lottoService.findByUserAndRoundAndEnabledOrderByIdDesc(currentUser,round.getNumber(), true)); // find user lotto this round
+            List<Lotto> systemLottoWithOutCurrentUser =lottoService.findByRoundAndEnabledOrderByIdDesc(round.getNumber(), true); // find System lotto with Current user
             systemLottoWithOutCurrentUser = systemLottoWithOutCurrentUser.stream().filter(lotto -> lotto.getUser().getEmail() != currentUser.getEmail()).collect(Collectors.toList());
             systemLotto.addAll(systemLottoWithOutCurrentUser); // user lotto + system lotto (without user lotto)
         }
 
-
-        // todo display matchedLotto to table 
-
-
+        // matching logic
         List<Lotto> matchedLotto = new ArrayList<Lotto>();
-        matchedLotto.addAll(Utils.getMatchedUserLottoAndUserLotto(userLotto));
-        matchedLotto.addAll(Utils.getMatchedUserLottoAndSystemLotto(userLotto, systemLotto));
-
-//        userLotto.stream().forEach(l -> System.out.println("<<< userLotto >>> barcode: "+l.getBarcode()+" number: "+l.getNumber()+" group: "+l.getGroup()+" round: "+l.getRound()));
-//        systemLotto.stream().forEach(l -> System.out.println("<<< SystemLotto >>> barcode: "+l.getBarcode()+" number: "+l.getNumber()+" group: "+l.getGroup()+" round: "+l.getRound()));
-//        matchedLotto.stream().forEach(l -> System.out.println("<<< MatchedLotto >>> barcode: "+l.getBarcode()+" number: "+l.getNumber()+" group: "+l.getGroup()+" round: "+l.getRound()));
+        matchedLotto.addAll(Utils.getMatchedUserLottoAndUserLotto(userLotto)); // matching lotto in the same user
+        matchedLotto.addAll(Utils.getMatchedUserLottoAndSystemLotto(userLotto, systemLotto)); // matching system lotto in without User lotto
 
         // end user matching logic
 
+        Utils.setMatchedLottoToGroup(matchedLotto, modelAndView);
         modelAndView.addObject("userLotto", userLotto);
         modelAndView.addObject("matchedLotto", matchedLotto);
         modelAndView.addObject("roundList", roundList);

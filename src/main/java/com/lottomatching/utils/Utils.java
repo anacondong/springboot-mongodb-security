@@ -70,6 +70,50 @@ public class Utils {
 
     }
 
+    public static void setMatchedLottoToGroup(List<Lotto> matchedLotto, ModelAndView modelAndView){
+
+        List<Lotto> r0 = new ArrayList<Lotto>();
+        List<Lotto> r1 = new ArrayList<Lotto>();
+        List<Lotto> r2 = new ArrayList<Lotto>();
+        List<Lotto> r3 = new ArrayList<Lotto>();
+        List<Lotto> r4 = new ArrayList<Lotto>();
+        List<Lotto> r5 = new ArrayList<Lotto>();
+        List<Lotto> r6 = new ArrayList<Lotto>();
+        List<Lotto> r7 = new ArrayList<Lotto>();
+        List<Lotto> r8 = new ArrayList<Lotto>();
+        List<Lotto> r9 = new ArrayList<Lotto>();
+
+        matchedLotto = matchedLotto.stream().sorted((o1, o2)->o1.getNumber().
+                compareTo(o2.getNumber())).
+                collect(Collectors.toList());
+
+        for(Lotto l: matchedLotto) {
+            String r = l.getNumber().substring(0,1);
+            if("0".equals(r)) {r0.add(l);}
+            else if("1".equals(r)) {r1.add(l);}
+            else if("2".equals(r)) {r2.add(l);}
+            else if("3".equals(r)) {r3.add(l);}
+            else if("4".equals(r)) {r4.add(l);}
+            else if("5".equals(r)) {r5.add(l);}
+            else if("6".equals(r)) {r6.add(l);}
+            else if("7".equals(r)) {r7.add(l);}
+            else if("8".equals(r)) {r8.add(l);}
+            else if("9".equals(r)) {r9.add(l);}
+        }
+
+        modelAndView.addObject("r0", r0);
+        modelAndView.addObject("r1", r1);
+        modelAndView.addObject("r2", r2);
+        modelAndView.addObject("r3", r3);
+        modelAndView.addObject("r4", r4);
+        modelAndView.addObject("r5", r5);
+        modelAndView.addObject("r6", r6);
+        modelAndView.addObject("r7", r7);
+        modelAndView.addObject("r8", r8);
+        modelAndView.addObject("r9", r9);
+
+    }
+
     public static Map getGroupMap(){
 
         Map groupMap = new HashMap();
