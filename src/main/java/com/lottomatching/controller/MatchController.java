@@ -46,20 +46,18 @@ public class MatchController {
         List<Lotto> userLotto = new ArrayList<Lotto>();
         List<Lotto> systemLotto = new ArrayList<Lotto>();
         for(Round round: roundList){
-            userLotto.addAll(lottoService.findByUserAndRoundAndEnabledOrderByIdDesc(currentUser,round.getNumber(), true)); // find user lotto this round
-            List<Lotto> systemLottoWithOutCurrentUser =lottoService.findByRoundAndEnabledOrderByIdDesc(round.getNumber(), true); // find System lotto with Current user
-            systemLottoWithOutCurrentUser = systemLottoWithOutCurrentUser.stream().filter(lotto -> lotto.getUser().getEmail() != currentUser.getEmail()).collect(Collectors.toList());
-            systemLotto.addAll(systemLottoWithOutCurrentUser); // user lotto + system lotto (without user lotto)
+            userLotto.addAll(lottoService.findByUserAndRoundAndEnabledOrderByIdDesc(currentUser,round.getNumber(), true));
+            systemLotto.addAll(lottoService.findByRoundAndEnabledOrderByIdDesc(round.getNumber(), true));
         }
 
         // matching logic
         List<Lotto> matchedLotto = new ArrayList<Lotto>();
-        matchedLotto.addAll(Utils.getMatchedUserLottoAndUserLotto(userLotto)); // matching lotto in the same user
-        matchedLotto.addAll(Utils.getMatchedUserLottoAndSystemLotto(userLotto, systemLotto)); // matching system lotto in without User lotto
+        matchedLotto.addAll(Utils.getMatchedUserLottoAndSystemLotto(userLotto, systemLotto));
 
         // end user matching logic
 
         Utils.setMatchedLottoToGroup(matchedLotto, modelAndView);
+
         modelAndView.addObject("userLotto", userLotto);
         modelAndView.addObject("matchedLotto", matchedLotto);
         modelAndView.addObject("roundList", roundList);
