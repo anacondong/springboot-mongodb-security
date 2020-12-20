@@ -43,7 +43,6 @@ public class Utils {
         for (Map.Entry<String, Lotto> entry : matchedLottoMap.entrySet()) {
             matchedLotto.add(entry.getValue());
         }
-        // todo group by barcode
         return matchedLotto;
     }
 
