@@ -21,7 +21,7 @@
         <div class="d-flex justify-content-start">
             <div class="d-flex flex-column px-1 text-center w-50"  th:each="r : ${roundList}">
                 <div class="w-100">
-                    งวดที่ <b th:text="${r.number}"></b> (<b th:text="${r.name}"></b>)
+                    งวดที่ <b th:text="${r.number}"></b> (<b th:text="${r.name}"></b>) จำนวน <b th:text="${roundSize['__${r.number}__']}"></b> เล่ม
                 </div>
                 <div class="border p-2 m-1 text-center" th:each="n : ${notMatchUserLotto}">
                     <div th:if="${r.number == n.round}">

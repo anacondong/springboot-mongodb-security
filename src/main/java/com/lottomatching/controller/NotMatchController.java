@@ -43,13 +43,16 @@ public class NotMatchController {
         List<Round> roundList = roundService.findByStatus("process");
         List<Lotto> userLotto = new ArrayList<Lotto>();
         List<Lotto> notMatchUserLotto = new ArrayList<Lotto>();
+        Map<String, String> roundSize = new HashMap<String, String>();
         for(Round round: roundList){
             userLotto.addAll(lottoService.findByUserAndRoundAndEnabledOrderByIdDesc(currentUser,round.getNumber(), true));
             notMatchUserLotto.addAll(lottoService.findByUserAndRoundAndMatch(currentUser, round.getNumber(),false));
+            roundSize.put(round.getNumber(),""+notMatchUserLotto.size());
         }
         modelAndView.addObject("userLotto", userLotto);
         modelAndView.addObject("notMatchUserLotto", notMatchUserLotto);
         modelAndView.addObject("roundList", roundList);
+        modelAndView.addObject("roundSize", roundSize);
 
         // todo copy to clipboard
         modelAndView.setViewName("notmatch/list");
