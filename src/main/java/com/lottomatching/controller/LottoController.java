@@ -78,6 +78,8 @@ public class LottoController {
                 lotto.setDate(new Date());
                 lotto.setEnabled(true);
                 lotto.setUser(currentUser);
+                lotto.setMatch(false);
+                lotto.setReceived(false);
 
                 // save only round status is open
                 for(Round r: roundList){

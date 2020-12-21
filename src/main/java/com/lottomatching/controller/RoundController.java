@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -64,30 +65,31 @@ public class RoundController {
                                       @RequestParam("status") String status) {
         Round round = roundService.findByNumber(number);
         ModelAndView modelAndView = new ModelAndView();
-
+        int count = 0;
         round.setName(name);
         round.setStatus(status);
 
         List<Lotto> lottoList = lottoService.findByRound(number);
         if(status.equals("open")){
             lottoList.stream().forEach(lotto -> lotto.setEnabled(true));
-            int count = lottoService.saveAll(lottoList);
-//            System.out.println("Updated lotto status:"+count);
+            count = lottoService.saveAll(lottoList);
         }
 
         if(status.equals("close")){
             lottoList.stream().forEach(lotto -> lotto.setEnabled(false));
-            int count = lottoService.saveAll(lottoList);
-//            System.out.println("Updated lotto status:"+count);
+            count = lottoService.saveAll(lottoList);
         }
 
         if(status.equals("process")){
-            // todo not sure for this event
+            lottoList.stream().forEach(lotto -> lotto.setEnabled(true));
+            lottoService.saveAll(lottoList);
+            List<Lotto> matchedLotto = Utils.getMatchedSystemLotto(lottoList);
+            count = lottoService.saveAll(matchedLotto);
         }
 
         boolean result = roundService.save(round);
         if(result){
-            modelAndView.addObject("message", "ดำเนินการสำเร็จ");
+            modelAndView.addObject("message", "ดำเนินการสำเร็จจำนวน :"+count);
         }else {
             modelAndView.addObject("messageError", "ดำเนินการไม่สำเร็จ");
         }
@@ -95,7 +97,6 @@ public class RoundController {
         round = roundService.findByNumber(number);
 
         Utils.setCurrentUser(userService, modelAndView);
-
         modelAndView.addObject("round", round);
         modelAndView.setViewName("round/edit");
         return modelAndView;

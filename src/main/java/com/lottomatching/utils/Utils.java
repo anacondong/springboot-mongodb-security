@@ -15,6 +15,29 @@ import static java.util.stream.Collectors.groupingBy;
 
 public class Utils {
 
+
+    public static List<Lotto> getMatchedSystemLotto(List<Lotto> systemLotto) {
+
+        // 0) not same barcode 1) same round >> 2) same lotto number, 3) 1-5 group
+        Map groupMap = Utils.getGroupMap();
+        List<Lotto> matchedLotto = new ArrayList<Lotto>();
+        for(Lotto ul: systemLotto){
+            for(Lotto sl: systemLotto){
+                if(!(ul.getBarcode().equals(sl.getBarcode()))) { // not same barcode
+                    if (ul.getRound().equals(sl.getRound())) { // same round
+                        if (ul.getNumber().equals(sl.getNumber())) { // same number
+                            if (groupMap.get(ul.getGroup()).equals(groupMap.get(sl.getGroup()))) { // same in the group length
+                                ul.setMatch(true);
+                                matchedLotto.add(ul);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return matchedLotto;
+    }
+
     public static List<Lotto> getMatchedUserLottoAndSystemLotto(List<Lotto> userLotto, List<Lotto> systemLotto) {
 
         // 0) not same barcode 1) same round >> 2) same lotto number, 3) 1-5 group

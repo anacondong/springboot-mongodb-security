@@ -22,9 +22,8 @@
             <div class="d-flex flex-column px-1 text-center w-50"  th:each="r : ${roundList}">
                 <div class="w-100">
                     งวดที่ <b th:text="${r.number}"></b> (<b th:text="${r.name}"></b>)
-                    <a>คัดลอก</a>
                 </div>
-                <div class="border p-2 m-1 text-left" th:each="n : ${notMatchUserLotto}">
+                <div class="border p-2 m-1 text-center" th:each="n : ${notMatchUserLotto}">
                     <div th:if="${r.number == n.round}">
                         <b th:text="${n.number}"></b>-<b th:text="${n.round}"></b>-<b th:text="${n.group}"></b>
                     </div>

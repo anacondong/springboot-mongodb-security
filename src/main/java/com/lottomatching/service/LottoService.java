@@ -63,5 +63,9 @@ public class LottoService {
         return lottoRepository.findByRoundAndEnabledOrderByIdDesc(roundNumber, enabled);
     }
 
+    public List<Lotto> findByUserAndRoundAndMatch(User user, String roundNumber, boolean isMatch) {
+        return lottoRepository.findByUserAndRoundAndMatch(user, roundNumber, isMatch);
+    }
+
 
 }

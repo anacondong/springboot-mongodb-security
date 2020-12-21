@@ -23,6 +23,7 @@ public class Lotto {
     private boolean match;
     private String matchType;
     private boolean enabled;
+    private boolean received;
 
     @DBRef
     private User user;
@@ -107,6 +108,14 @@ public class Lotto {
         this.enabled = enabled;
     }
 
+    public boolean isReceived() {
+        return received;
+    }
+
+    public void setReceived(boolean received) {
+        this.received = received;
+    }
+
     @Override
     public String toString() {
         return "Lotto{" +
@@ -119,6 +128,7 @@ public class Lotto {
                 ", match=" + match +
                 ", matchType='" + matchType + '\'' +
                 ", enabled=" + enabled +
+                ", received=" + received +
                 ", user=" + user +
                 '}';
     }

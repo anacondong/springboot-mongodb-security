@@ -44,18 +44,13 @@ public class MatchController {
         User currentUser = userService.findUserByEmail(auth.getName());
         List<Round> roundList = roundService.findByStatus("process");
         List<Lotto> userLotto = new ArrayList<Lotto>();
-        List<Lotto> systemLotto = new ArrayList<Lotto>();
+        List<Lotto> matchedLotto = new ArrayList<Lotto>();
         for(Round round: roundList){
             userLotto.addAll(lottoService.findByUserAndRoundAndEnabledOrderByIdDesc(currentUser,round.getNumber(), true));
-            systemLotto.addAll(lottoService.findByRoundAndEnabledOrderByIdDesc(round.getNumber(), true));
+            matchedLotto.addAll(lottoService.findByUserAndRoundAndMatch(currentUser, round.getNumber(),true));
         }
 
-        // matching logic
-        List<Lotto> matchedLotto = new ArrayList<Lotto>();
-        matchedLotto.addAll(Utils.getMatchedUserLottoAndSystemLotto(userLotto, systemLotto));
-
-        // end user matching logic
-
+        // set to display order grouping page
         Utils.setMatchedLottoToGroup(matchedLotto, modelAndView);
 
         modelAndView.addObject("userLotto", userLotto);

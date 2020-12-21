@@ -38,27 +38,15 @@ public class NotMatchController {
 
         Utils.setCurrentUser(userService, modelAndView);
 
-        // start user matching logic
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.findUserByEmail(auth.getName());
         List<Round> roundList = roundService.findByStatus("process");
         List<Lotto> userLotto = new ArrayList<Lotto>();
-        List<Lotto> systemLotto = new ArrayList<Lotto>();
+        List<Lotto> notMatchUserLotto = new ArrayList<Lotto>();
         for(Round round: roundList){
             userLotto.addAll(lottoService.findByUserAndRoundAndEnabledOrderByIdDesc(currentUser,round.getNumber(), true));
-            systemLotto.addAll(lottoService.findByRoundAndEnabledOrderByIdDesc(round.getNumber(), true));
+            notMatchUserLotto.addAll(lottoService.findByUserAndRoundAndMatch(currentUser, round.getNumber(),false));
         }
-
-        // matching logic
-        List<Lotto> matchedLotto = new ArrayList<Lotto>();
-        matchedLotto.addAll(Utils.getMatchedUserLottoAndSystemLotto(userLotto, systemLotto));
-        // end user matching logic
-
-        // notMatchLotto = UserLotto - matchedLotto;
-        List<Lotto> notMatchUserLotto = new ArrayList<Lotto>();
-        notMatchUserLotto.addAll(userLotto);
-        notMatchUserLotto.removeAll(matchedLotto);
-
         modelAndView.addObject("userLotto", userLotto);
         modelAndView.addObject("notMatchUserLotto", notMatchUserLotto);
         modelAndView.addObject("roundList", roundList);
