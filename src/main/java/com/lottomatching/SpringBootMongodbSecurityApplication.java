@@ -1,13 +1,8 @@
 package com.lottomatching;
 
-import com.lottomatching.domain.News;
-import com.lottomatching.domain.Role;
-import com.lottomatching.domain.Round;
-import com.lottomatching.domain.User;
-import com.lottomatching.repository.NewsRepository;
-import com.lottomatching.repository.RoleRepository;
-import com.lottomatching.repository.RoundRepository;
-import com.lottomatching.repository.UserRepository;
+import com.lottomatching.domain.*;
+import com.lottomatching.repository.*;
+import org.bson.types.ObjectId;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,7 +23,7 @@ public class SpringBootMongodbSecurityApplication {
     }
 
     @Bean
-    CommandLineRunner init(RoleRepository roleRepository, UserRepository userRepository, NewsRepository newsRepository, RoundRepository roundRepository) {
+    CommandLineRunner init(RoleRepository roleRepository, UserRepository userRepository, NewsRepository newsRepository, RoundRepository roundRepository, DeliveryRepository deliveryRepository) {
 
         return args -> {
 
@@ -87,6 +82,16 @@ public class SpringBootMongodbSecurityApplication {
                 }
             }
 
+            // init delivery
+            User adminUser = userRepository.findByEmail("admin");
+            List<Delivery> deliveryList = deliveryRepository.findByUser(adminUser);
+            if (deliveryList.isEmpty()) {
+                Delivery delivery = new Delivery();
+                delivery.setUser(adminUser);
+                delivery.setEnabled(false);
+                deliveryRepository.save(delivery);
+                deliveryRepository.delete(delivery);
+            }
 
         };
 

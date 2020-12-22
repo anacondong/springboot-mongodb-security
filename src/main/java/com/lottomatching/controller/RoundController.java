@@ -1,14 +1,8 @@
 package com.lottomatching.controller;
 
 
-import com.lottomatching.domain.Lotto;
-import com.lottomatching.domain.News;
-import com.lottomatching.domain.Round;
-import com.lottomatching.domain.User;
-import com.lottomatching.service.CustomUserDetailsService;
-import com.lottomatching.service.LottoService;
-import com.lottomatching.service.NewsService;
-import com.lottomatching.service.RoundService;
+import com.lottomatching.domain.*;
+import com.lottomatching.service.*;
 import com.lottomatching.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -34,6 +28,9 @@ public class RoundController {
 
     @Autowired
     private LottoService lottoService;
+
+    @Autowired
+    private DeliveryService deliveryService;
 
     @RequestMapping(value = "/admin/round", method = RequestMethod.GET)
     public ModelAndView roundHome() {
@@ -70,21 +67,68 @@ public class RoundController {
         round.setStatus(status);
 
         List<Lotto> lottoList = lottoService.findByRound(number);
+        List<Delivery> deliveryList = deliveryService.findByRound(number);
         if(status.equals("open")){
             lottoList.stream().forEach(lotto -> lotto.setEnabled(true));
             count = lottoService.saveAll(lottoList);
+
+            deliveryList.stream().forEach(delivery -> delivery.setEnabled(true));
+            int updatedDeliver = deliveryService.saveAll(deliveryList);
+//            System.out.println("updated delivery: "+ updatedDeliver);
+
         }
 
         if(status.equals("close")){
             lottoList.stream().forEach(lotto -> lotto.setEnabled(false));
             count = lottoService.saveAll(lottoList);
+
+            deliveryList.stream().forEach(delivery -> delivery.setEnabled(false));
+            int updatedDeliver = deliveryService.saveAll(deliveryList);
+//            System.out.println("updated delivery: "+ updatedDeliver);
         }
 
         if(status.equals("process")){
+            // process match lotto
             lottoList.stream().forEach(lotto -> lotto.setEnabled(true));
             lottoService.saveAll(lottoList);
             List<Lotto> matchedLotto = Utils.getMatchedSystemLotto(lottoList);
             count = lottoService.saveAll(matchedLotto);
+
+            // process summary match delivery lotto
+            List<User> usersList = userService.findUsers();
+            for(User user: usersList) {
+                if (!(user.getEmail().equals("admin"))){ // exclude admin
+
+                    List<Delivery> userDeliveryList = deliveryService.findByUserAndRound(user, round.getNumber());
+                    int lottoUserRoundAllList = lottoService.findByUserAndRoundOrderByIdDesc(user, round.getNumber()).size();
+                    int lottoUserRoundMatchedList = lottoService.findByUserAndRoundAndMatch(user, round.getNumber(), true).size();
+                    int lottoUserRoundNotMatchedList = lottoService.findByUserAndRoundAndMatch(user, round.getNumber(), false).size();
+                    Delivery delivery = new Delivery();
+                    if (userDeliveryList.isEmpty()) {
+                        // insert summary delivery
+                        delivery = new Delivery();
+                        delivery.setUser(user);
+                        delivery.setEnabled(true);
+                        delivery.setRound(round.getNumber());
+                        delivery.setStatus("Pending");
+                        delivery.setLottoList(lottoUserRoundAllList); // all lotto in this round
+                        delivery.setMatched(lottoUserRoundMatchedList); // user match this round
+                        delivery.setNotMatched(lottoUserRoundNotMatchedList);// user not match this round
+
+                    } else {
+                        // update summary delivery
+                        delivery = userDeliveryList.get(0);
+                        delivery.setUser(user);
+                        delivery.setEnabled(true);
+                        delivery.setRound(round.getNumber());
+                        delivery.setStatus("Pending");
+                        delivery.setLottoList(lottoUserRoundAllList); // all lotto in this round
+                        delivery.setMatched(lottoUserRoundMatchedList); // user match this round
+                        delivery.setNotMatched(lottoUserRoundNotMatchedList);// user not match this round
+                    }
+                    deliveryService.save(delivery);
+                }
+            }
         }
 
         boolean result = roundService.save(round);
