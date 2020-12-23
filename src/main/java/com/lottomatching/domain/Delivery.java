@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Delivery {
 
     @Id
-    private ObjectId _id;
+    private ObjectId id;
 
     @DBRef
     private User user;
@@ -17,15 +17,16 @@ public class Delivery {
     private int lottoList;
     private int matched;
     private int notMatched;
+    private int received;
     private String status;
     private boolean enabled;
 
-    public ObjectId get_id() {
-        return _id;
+    public ObjectId getId() {
+        return id;
     }
 
-    public void set_id(ObjectId _id) {
-        this._id = _id;
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     public User getUser() {
@@ -68,6 +69,14 @@ public class Delivery {
         this.notMatched = notMatched;
     }
 
+    public int getReceived() {
+        return received;
+    }
+
+    public void setReceived(int received) {
+        this.received = received;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -87,12 +96,13 @@ public class Delivery {
     @Override
     public String toString() {
         return "Delivery{" +
-                "_id=" + _id +
+                "id=" + id +
                 ", user=" + user +
                 ", round='" + round + '\'' +
                 ", lottoList=" + lottoList +
                 ", matched=" + matched +
                 ", notMatched=" + notMatched +
+                ", received=" + received +
                 ", status='" + status + '\'' +
                 ", enabled=" + enabled +
                 '}';

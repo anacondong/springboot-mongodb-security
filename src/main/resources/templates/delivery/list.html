@@ -7,13 +7,14 @@
 <body>
 <div layout:fragment="content">
     <div class="alert alert-primary text-right" role="alert">
-        งวดที่ เปิดชนเลข:
+        งวดที่:
         <span th:each="rd : ${roundList}">
             <button type="button" class="btn btn btn-secondary" th:text="${rd.number}">number</button>&nbsp;&nbsp;
         </span>
-        จำนวนเลขทีส่งเข้ามาทั้งหมด: <button type="button" class="btn btn btn-primary" th:text="${lottosRound}">countUserLotto</button>&nbsp;&nbsp;
-        จำนวนเลขที่ชนสำเร็จ: <button type="button" class="btn btn btn-success" th:text="${lottosRoundMatched}">notMatchUserLotto</button>&nbsp;&nbsp;
-        จำนวนเลขที่ชนไม่สำเร็จ: <button type="button" class="btn btn btn-danger" th:text="${lottosRoundNotmatched}">notMatchUserLotto</button>&nbsp;&nbsp;
+        ส่งเข้ามาทั้งหมด: <button type="button" class="btn btn btn-primary" th:text="${lottosRound}">countUserLotto</button>&nbsp;&nbsp;
+        ชนสำเร็จทั้งหมด: <button type="button" class="btn btn btn-warning" th:text="${lottosRoundMatched}">lottosRoundMatched</button>
+        ชนไม่สำเร็จทั้งหมด: <button type="button" class="btn btn btn-danger" th:text="${lottosRoundNotmatched}">notMatchUserLotto</button>
+        ส่งเล่มแล้วทั้งหมด: <button type="button" class="btn btn btn-success" th:text="${lottosRoundReceived}">lottosRoundReceived</button>
     </div>
 
 
@@ -29,6 +30,7 @@
             <th scope="col">จำนวนสลากทั้งหมด</th>
             <th scope="col">ชนสำเร็จ</th>
             <th scope="col">ชนไม่สำเร็จ</th>
+            <th scope="col">ส่งเล่มแล้ว</th>
             <th scope="col">สถานะ</th>
             <th scope="col">จัดการ</th>
         </tr>
@@ -42,8 +44,11 @@
             <td th:text="${delivery.lottoList}">lottoList</td>
             <td th:text="${delivery.matched}" class="font-weight-bold">matched</td>
             <td th:text="${delivery.notMatched}">notMatched</td>
-            <td th:text="${delivery.status}" class="font-weight-bold" >status</td>
-            <td><a class="btn btn-link" th:href="@{/admin/delivery/{id}(id=${delivery._id})}">ตรวจสอบ</a></td>
+            <td th:text="${delivery.received}">received</td>
+            <td th:if="${delivery.status == 'Complete'}" th:text="สำเร็จ" class="font-weight-bold" >status</td>
+            <td th:if="${delivery.status == 'Pending'}" th:text="กำลังจัดการ" class="font-weight-bold" >status</td>
+            <td th:if="${delivery.status == 'Not complete'}" th:text="ไม่สำเร็จ" class="font-weight-bold" >status</td>
+            <td><a class="btn btn-link" th:href="@{/admin/delivery/{id}(id=${delivery.id})}">ตรวจสอบ</a></td>
         </tr>
     </table>
 

@@ -5,6 +5,7 @@ import com.lottomatching.domain.Lotto;
 import com.lottomatching.domain.User;
 import com.lottomatching.repository.DeliveryRepository;
 import com.lottomatching.repository.RoundRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,10 @@ public class DeliveryService {
 
     @Autowired
     private DeliveryRepository deliveryRepository;
+
+    public Delivery findById(ObjectId id){
+        return deliveryRepository.findById(id);
+    }
 
     public List<Delivery> findByRound(String roundNumber){
         return deliveryRepository.findByRound(roundNumber);

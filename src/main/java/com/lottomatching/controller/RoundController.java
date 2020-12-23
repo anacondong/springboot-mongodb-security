@@ -103,6 +103,7 @@ public class RoundController {
                     int lottoUserRoundAllList = lottoService.findByUserAndRoundOrderByIdDesc(user, round.getNumber()).size();
                     int lottoUserRoundMatchedList = lottoService.findByUserAndRoundAndMatch(user, round.getNumber(), true).size();
                     int lottoUserRoundNotMatchedList = lottoService.findByUserAndRoundAndMatch(user, round.getNumber(), false).size();
+                    int lottoUserRoundReceivedList = lottoService.findByUserAndRoundAndReceived(user, round.getNumber(), true).size();
                     Delivery delivery = new Delivery();
                     if (userDeliveryList.isEmpty()) {
                         // insert summary delivery
@@ -114,6 +115,7 @@ public class RoundController {
                         delivery.setLottoList(lottoUserRoundAllList); // all lotto in this round
                         delivery.setMatched(lottoUserRoundMatchedList); // user match this round
                         delivery.setNotMatched(lottoUserRoundNotMatchedList);// user not match this round
+                        delivery.setReceived(lottoUserRoundReceivedList);
 
                     } else {
                         // update summary delivery
@@ -125,6 +127,7 @@ public class RoundController {
                         delivery.setLottoList(lottoUserRoundAllList); // all lotto in this round
                         delivery.setMatched(lottoUserRoundMatchedList); // user match this round
                         delivery.setNotMatched(lottoUserRoundNotMatchedList);// user not match this round
+                        delivery.setReceived(lottoUserRoundReceivedList);
                     }
                     deliveryService.save(delivery);
                 }
