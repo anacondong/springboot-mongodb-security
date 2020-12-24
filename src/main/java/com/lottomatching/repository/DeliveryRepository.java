@@ -15,6 +15,4 @@ public interface DeliveryRepository  extends MongoRepository<Delivery, Long> {
     List<Delivery> findByRound(String roundNumber);
     List<Delivery> findByRoundOrderByStatusDesc(String roundNumber);
     List<Delivery> findByUserAndRound(User user, String roundNumber);
-
-
 }

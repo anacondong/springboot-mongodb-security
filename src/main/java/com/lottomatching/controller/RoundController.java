@@ -123,7 +123,7 @@ public class RoundController {
                         delivery.setUser(user);
                         delivery.setEnabled(true);
                         delivery.setRound(round.getNumber());
-                        delivery.setStatus("Pending");
+                        delivery.setStatus(delivery.getStatus());
                         delivery.setLottoList(lottoUserRoundAllList); // all lotto in this round
                         delivery.setMatched(lottoUserRoundMatchedList); // user match this round
                         delivery.setNotMatched(lottoUserRoundNotMatchedList);// user not match this round

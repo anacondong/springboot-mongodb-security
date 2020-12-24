@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class DeliveryController {
@@ -80,6 +77,21 @@ public class DeliveryController {
         ModelAndView modelAndView = new ModelAndView();
         Utils.setCurrentUser(userService, modelAndView);
 
+
+        List<Round> roundList = roundService.findByStatus("process");
+        List<Lotto> userLotto = new ArrayList<Lotto>();
+        List<Lotto> matchedLotto = new ArrayList<Lotto>();
+        for(Round round: roundList){
+            userLotto.addAll(lottoService.findByUserAndRoundAndEnabledOrderByIdDesc(delivery.getUser(),round.getNumber(), true));
+            matchedLotto.addAll(lottoService.findByUserAndRoundAndMatch(delivery.getUser(), round.getNumber(),true));
+        }
+
+        // set to display order grouping page
+        Utils.setMatchedLottoToGroup(matchedLotto, modelAndView);
+
+        modelAndView.addObject("userLotto", userLotto);
+        modelAndView.addObject("matchedLotto", matchedLotto);
+        modelAndView.addObject("roundList", roundList);
         modelAndView.addObject("delivery", delivery);
         modelAndView.setViewName("delivery/delivery");
         return modelAndView;
@@ -93,9 +105,71 @@ public class DeliveryController {
 
         ModelAndView modelAndView = new ModelAndView();
         Utils.setCurrentUser(userService, modelAndView);
+        List<Round> roundList = roundService.findByStatus("process");
+        List<Lotto> userLotto = new ArrayList<Lotto>();
+        List<Lotto> matchedLotto = new ArrayList<Lotto>();
+        for(Round round: roundList){
+            userLotto.addAll(lottoService.findByUserAndRoundAndEnabledOrderByIdDesc(delivery.getUser(),round.getNumber(), true));
+            matchedLotto.addAll(lottoService.findByUserAndRoundAndMatch(delivery.getUser(), round.getNumber(),true));
+        }
 
+        delivery = deliveryService.findById(delivery.getId());
+
+        // set to display order grouping page
+        Utils.setMatchedLottoToGroup(matchedLotto, modelAndView);
+        modelAndView.addObject("userLotto", userLotto);
+        modelAndView.addObject("matchedLotto", matchedLotto);
+        modelAndView.addObject("roundList", roundList);
         modelAndView.addObject("delivery", delivery);
         modelAndView.addObject("message", "สำเร็จ");
+        modelAndView.setViewName("delivery/delivery");
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value = "/admin/delivery/receive", method = RequestMethod.POST)
+    public ModelAndView deliveryReceive(@RequestParam("id") String id, @RequestParam("barcode") String barcode) {
+        Delivery delivery = deliveryService.findById(new ObjectId(id));
+        List<Lotto> userLottoReceived = lottoService.findByUserAndRoundAndMatch(delivery.getUser(),delivery.getRound(),true);
+        List<String> barcodeList = Arrays.asList(barcode.split("\\r?\\n"));
+        int received = 0;
+
+        for(String bc: barcodeList) {
+            for (Lotto lotto : userLottoReceived) {
+                if (lotto.getBarcode().equals(bc)) {
+                    lotto.setReceived(true);
+                    received = received + lottoService.save(lotto);
+                }
+            }
+        }
+        received = received + delivery.getReceived();
+        delivery.setReceived(received);
+        deliveryService.save(delivery);
+        delivery = deliveryService.findById(delivery.getId());
+
+        ModelAndView modelAndView = new ModelAndView();
+        Utils.setCurrentUser(userService, modelAndView);
+        List<Round> roundList = roundService.findByStatus("process");
+        List<Lotto> userLotto = new ArrayList<Lotto>();
+        List<Lotto> matchedLotto = new ArrayList<Lotto>();
+        for(Round round: roundList){
+            userLotto.addAll(lottoService.findByUserAndRoundAndEnabledOrderByIdDesc(delivery.getUser(),round.getNumber(), true));
+            matchedLotto.addAll(lottoService.findByUserAndRoundAndMatch(delivery.getUser(), round.getNumber(),true));
+        }
+
+        // set to display order grouping page
+        Utils.setMatchedLottoToGroup(matchedLotto, modelAndView);
+        modelAndView.addObject("userLotto", userLotto);
+        modelAndView.addObject("matchedLotto", matchedLotto);
+        modelAndView.addObject("roundList", roundList);
+        modelAndView.addObject("delivery", delivery);
+
+        if(received > 0) {
+            modelAndView.addObject("message", "ส่งทั้งหมด "+barcodeList.size()+" ตรวจสอบสำเร็จ "+received+" จำนวน  ไม่สำเร็จจำนวน "+(barcodeList.size() - received));
+        } else {
+            modelAndView.addObject("message", "ไม่สำเร็จ โปรดตรวจสอบข้อมูล");
+        }
+
         modelAndView.setViewName("delivery/delivery");
         return modelAndView;
     }

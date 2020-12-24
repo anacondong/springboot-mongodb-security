@@ -1,3 +1,8 @@
+Mongo shell
+mongosh "mongodb://localhost:27017"
+db.lotto.find()
+db.lotto.updateMany({},{$set: {received: false}})
+
 
 // todo start match table and get results display
 
@@ -104,4 +109,3 @@
 1933060840084050
 1933109360936050
 1933265490549050
-
