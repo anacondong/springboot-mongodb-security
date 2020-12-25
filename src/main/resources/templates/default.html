@@ -39,6 +39,10 @@
             </li>
 
             <li class="nav-item " th:if="${currentUserRoles == 'ADMIN'}">
+                <a class="nav-link" href="/admin/lottoGroup">จัดการจัดการเลขชน</a>
+            </li>
+
+            <li class="nav-item " th:if="${currentUserRoles == 'ADMIN'}">
                 <a class="nav-link" href="/admin/news">จัดการประกาศ</a>
             </li>
 

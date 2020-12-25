@@ -23,7 +23,11 @@ public class SpringBootMongodbSecurityApplication {
     }
 
     @Bean
-    CommandLineRunner init(RoleRepository roleRepository, UserRepository userRepository, NewsRepository newsRepository, RoundRepository roundRepository, DeliveryRepository deliveryRepository) {
+    CommandLineRunner init(RoleRepository roleRepository,
+                           UserRepository userRepository,
+                           NewsRepository newsRepository,
+                           RoundRepository roundRepository,
+                           DeliveryRepository deliveryRepository) {
 
         return args -> {
 

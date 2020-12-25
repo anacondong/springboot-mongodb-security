@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+<head>
+    <title>หน้าหลัก Admin</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="alert alert-primary text-right" role="alert">
+        งวดที่ เปิดชนเลข:
+        <span th:each="rd : ${roundList}">
+            <button type="button" class="btn btn btn-secondary" th:text="${rd.number}">number</button>&nbsp;&nbsp;
+        </span>
+        ชนได้: <button type="button" class="btn btn-primary" th:text="${#lists.size(matchedLotto)}">matchedLotto</button>&nbsp;&nbsp;
+        ส่งแล้ว: <button type="button" class="btn btn-success" th:text="${#lists.size(receivedLotto)}">receivedLotto</button>&nbsp;&nbsp;
+        ยังไม่ส่ง: <button type="button" class="btn btn-danger" th:text="${#lists.size(notReceivedLotto)}">notReceivedLotto</button>&nbsp;&nbsp;
+    </div>
+
+
+
+
+
+
+    <div class="d-flex flex-row justify-content-around">
+
+        <div th:each="element : ${lottoMap}">
+            <div class="card m-2" style="width: 10rem;"  th:if="${#lists.size(element.value) == 2}">2 ใบ
+                <div class="card-body" >
+                    <h5 class="card-title text-center" th:text="${element.key}" >number</h5>
+                    <span th:each="lotto : ${element.value}">
+                        <p class="card-link btn btn btn-secondary" th:text="${lotto.group}">group</p>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+
+        <div th:each="element : ${lottoMap}">
+            <div class="card m-2" style="width: 12rem;"  th:if="${#lists.size(element.value) == 3}">3 ใบ
+                <div class="card-body" >
+                    <h5 class="card-title text-center" th:text="${element.key}" >number</h5>
+                    <span th:each="lotto : ${element.value}">
+                        <p class="card-link btn btn btn-secondary" th:text="${lotto.group}">group</p>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div th:each="element : ${lottoMap}">
+            <div class="card m-2" style="width: 16rem;" th:if="${#lists.size(element.value) == 4}">4 ใบ
+                <div class="card-body" >
+                    <h5 class="card-title text-center" th:text="${element.key}" >number</h5>
+                    <span th:each="lotto : ${element.value}">
+                        <p class="card-link btn btn btn-secondary" th:text="${lotto.group}">group</p>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div th:each="element : ${lottoMap}">
+            <div class="card m-2" style="width: 18rem;" th:if="${#lists.size(element.value) == 5}">5 ใบ
+                <div class="card-body" >
+                    <h5 class="card-title text-center" th:text="${element.key}" >number</h5>
+                    <span th:each="lotto : ${element.value}">
+                        <p class="card-link btn btn btn-secondary" th:text="${lotto.group}">group</p>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

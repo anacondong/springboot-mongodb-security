@@ -17,5 +17,6 @@ public interface LottoRepository extends MongoRepository<Lotto, Long> {
     List<Lotto> findByRound(String roundNumber);
     List<Lotto> findByUserAndRoundAndMatch(User user, String roundNumber,boolean isMatch);
     List<Lotto> findByUserAndRoundAndReceived(User user, String roundNumber,boolean isReceived);
+    List<Lotto> findByRoundAndMatch(String roundNumber,boolean isMatch);
 
 }
