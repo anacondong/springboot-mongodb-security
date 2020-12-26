@@ -23,50 +23,63 @@
 
     <div class="d-flex flex-row justify-content-around">
 
-        <div th:each="element : ${lottoMap}">
-            <div class="card m-2" style="width: 10rem;"  th:if="${#lists.size(element.value) == 2}">2 ใบ
-                <div class="card-body" >
-                    <h5 class="card-title text-center" th:text="${element.key}" >number</h5>
-                    <span th:each="lotto : ${element.value}">
-                        <p class="card-link btn btn btn-secondary" th:text="${lotto.group}">group</p>
-                    </span>
+
+        <div class="d-flex flex-column">
+            <h6 class="text-center font-weight-bold">2 ใบ</h6>
+            <div th:each="element : ${lottoMap}">
+                <div class="card m-2" style="width: 10rem;"  th:if="${#lists.size(element.value) == 2}">
+                    <div class="card-body" >
+                        <h5 class="card-title text-center" th:text="${element.key}" >number</h5>
+                        <span th:each="lotto : ${element.value}">
+                            <p th:classappend="${lotto.received} ? 'card-link  btn btn-success' : 'card-link btn btn-secondary'" class="card-link btn btn-secondary" th:text="${lotto.group}">group</p>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
 
-
-        <div th:each="element : ${lottoMap}">
-            <div class="card m-2" style="width: 12rem;"  th:if="${#lists.size(element.value) == 3}">3 ใบ
-                <div class="card-body" >
-                    <h5 class="card-title text-center" th:text="${element.key}" >number</h5>
-                    <span th:each="lotto : ${element.value}">
-                        <p class="card-link btn btn btn-secondary" th:text="${lotto.group}">group</p>
-                    </span>
+        <div class="d-flex flex-column">
+            <h6 class="text-center font-weight-bold">3 ใบ</h6>
+            <div th:each="element : ${lottoMap}">
+                <div class="card m-2" style="width: 12rem;"  th:if="${#lists.size(element.value) == 3}">
+                    <div class="card-body" >
+                        <h5 class="card-title text-center" th:text="${element.key}" >number</h5>
+                        <span th:each="lotto : ${element.value}">
+                            <p th:classappend="${lotto.received} ? 'card-link  btn btn-success' : 'card-link btn btn-secondary'" class="card-link btn btn-secondary" th:text="${lotto.group}">group</p>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div th:each="element : ${lottoMap}">
-            <div class="card m-2" style="width: 16rem;" th:if="${#lists.size(element.value) == 4}">4 ใบ
-                <div class="card-body" >
-                    <h5 class="card-title text-center" th:text="${element.key}" >number</h5>
-                    <span th:each="lotto : ${element.value}">
-                        <p class="card-link btn btn btn-secondary" th:text="${lotto.group}">group</p>
-                    </span>
+        <div class="d-flex flex-column">
+            <h6 class="text-center font-weight-bold">4 ใบ</h6>
+            <div th:each="element : ${lottoMap}">
+                <div class="card m-2" style="width: 16rem;" th:if="${#lists.size(element.value) == 4}">
+                    <div class="card-body" >
+                        <h5 class="card-title text-center" th:text="${element.key}" >number</h5>
+                        <span th:each="lotto : ${element.value}">
+                            <p th:classappend="${lotto.received} ? 'card-link  btn btn-success' : 'card-link btn btn-secondary'" class="card-link btn btn-secondary" th:text="${lotto.group}">group</p>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div th:each="element : ${lottoMap}">
-            <div class="card m-2" style="width: 18rem;" th:if="${#lists.size(element.value) == 5}">5 ใบ
-                <div class="card-body" >
-                    <h5 class="card-title text-center" th:text="${element.key}" >number</h5>
-                    <span th:each="lotto : ${element.value}">
-                        <p class="card-link btn btn btn-secondary" th:text="${lotto.group}">group</p>
-                    </span>
+        <div class="d-flex flex-column">
+            <h6 class="text-center font-weight-bold">5 ใบ</h6>
+            <div th:each="element : ${lottoMap}">
+                <div class="card m-2" style="width: 18rem;" th:if="${#lists.size(element.value) == 5}">
+                    <div class="card-body" >
+                        <h5 class="card-title text-center" th:text="${element.key}" >number</h5>
+                        <span th:each="lotto : ${element.value}">
+                            <p th:classappend="${lotto.received} ? 'card-link  btn btn-success' : 'card-link btn btn-secondary'" class="card-link btn btn-secondary" th:text="${lotto.group}">group</p>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
+
 
     </div>
 
