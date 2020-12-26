@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
 <head>
-    <title>หน้าหลัก Admin</title>
+    <title>ซูปเปอร์ แมทชิ่ง</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -13,10 +13,8 @@
         messageError
     </div>
     <div>
-        ตาราง ผู้ใช้งาน
-
         <form class="text-right" th:action="@{/admin/addUser}" method="get">
-            <button class="btn btn-success btn-lg btn-block" type="Submit"> เพิ่ม</button>
+            <button class="btn btn-success btn-lg text-right" type="Submit"> เพิ่ม</button>
         </form>
 
         <div class="text-right">จำนวนทั้งหมด: <b th:text="${#lists.size(usersList)}">[usersList]</b></div>

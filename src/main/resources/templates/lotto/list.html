@@ -2,11 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
 <head>
-    <title>หน้าหลัก Admin</title>
+    <title>ซูปเปอร์ แมทชิ่ง</title>
 </head>
 <body>
 <div layout:fragment="content">
-    ตาราง lotto
     <div class="alert alert-primary" role="alert">
         งวดที่ เปิดระบบ:
         <span th:each="rd : ${roundList}">
@@ -34,7 +33,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">บาร์โค้ด</th>
-                <th scope="col">ฉลากที่</th>
+                <th scope="col">สลากที่</th>
                 <th scope="col">งวดที่</th>
                 <th scope="col">ชุดที่</th>
                 <th scope="col">ผลการส่งเลข</th>

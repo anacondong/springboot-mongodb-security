@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
 <head>
-    <title>หน้าหลัก Admin</title>
+    <title>ซูปเปอร์ แมทชิ่ง</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -13,7 +13,6 @@
         messageError
     </div>
     <div>
-        ตารางงวด
         <div class="text-right">จำนวนทั้งหมด: <b th:text="${#lists.size(roundList)}">[roundList]</b></div>
 
         <table class="table table-hover">

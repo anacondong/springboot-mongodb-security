@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
 <head>
-    <title>หน้าหลัก Admin</title>
+    <title>ซูปเปอร์ แมทชิ่ง</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -11,7 +11,6 @@
     </div>
 
     <div>
-        <h1 class="h1">ประกาศ</h1>
         <div class="alert alert-secondary" role="alert" th:utext="${news}" th:if="${news != null}">news</div>
     </div>
 
