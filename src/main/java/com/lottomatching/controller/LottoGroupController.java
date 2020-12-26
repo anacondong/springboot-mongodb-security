@@ -72,7 +72,22 @@ public class LottoGroupController {
             List<Lotto> mapValue =  (List<Lotto>)map.getValue();
         }
 
+        // count sum for each type
+        int s2 = 0;int s3 = 0;int s4 = 0;int s5 = 0;
 
+        for (Map.Entry map : lottoMap.entrySet()) {
+            List<Lotto> mapValue =  (List<Lotto>)map.getValue();
+            if(mapValue.size() == 2){ s2 = s2+1;}
+            else if(mapValue.size() == 3){s3 = s3+1;}
+            else if(mapValue.size() == 4){s4 = s4+1;}
+            else if(mapValue.size() == 5){s5 = s5+1;}
+        }
+
+
+        modelAndView.addObject("s2", s2);
+        modelAndView.addObject("s3", s3);
+        modelAndView.addObject("s4", s4);
+        modelAndView.addObject("s5", s5);
         modelAndView.addObject("lottoMap", lottoMap);
         modelAndView.addObject("receivedLotto", receivedLotto);
         modelAndView.addObject("notReceivedLotto", notReceivedLotto);
